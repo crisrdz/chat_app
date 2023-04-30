@@ -1,0 +1,32 @@
+.footer {
+  height: var(--footer-height);
+  color: var(--color-lg-primary);
+  background-color: var(--color-primary);
+  box-shadow: 0 0 1px 1px var(--color-secondary);
+}
+
+.footer__content-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+
+  list-style-type: none;
+  padding: 0;
+
+  height: 100%;
+  margin: auto;
+}
+
+.footer__content-list__item {
+  display: flex;
+  gap: 5px;
+}
+
+.footer__content-list__link {
+  font-size: 1.1rem;
+  color: var(--color-lg-primary);
+  display: flex;
+}

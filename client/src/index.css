@@ -1,0 +1,13 @@
+:root {
+  --color-white: #FAFAFA;
+  --color-primary: #7371FC;
+  --color-secondary: #A594F9;
+  --color-tertiary: #CDC1FF;
+  --color-lg-primary: #F5EFFF;
+  --color-lg-secondary: #E5D9F2;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  margin: 0;
+}
