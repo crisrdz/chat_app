@@ -1,0 +1,1 @@
+export const defaultError = "Ha ocurrido un error en el servidor";

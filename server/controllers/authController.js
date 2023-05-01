@@ -4,12 +4,12 @@ import User from "../models/User.js";
 
 export const signUp = async (req, res) => {
   try {
-    const { email, username, password } = req.body;
+    const { email, username, passwordOne } = req.body;
 
     const newUser = new User({
       email,
       username,
-      password: await User.encryptPassword(password),
+      password: await User.encryptPassword(passwordOne),
     });
 
     const userSaved = await newUser.save();
@@ -22,7 +22,6 @@ export const signUp = async (req, res) => {
       success: true,
       token,
     });
-
   } catch (error) {
     return res.status(500).json({
       succes: false,
@@ -37,24 +36,21 @@ export const signIn = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    console.log(user)
-
-    if (! await User.comparePasswords(password, user.password)) {
+    if (!user || !(await User.comparePasswords(password, user?.password))) {
       return res.status(401).send({
         success: false,
-        message: "Correo electrónico o contraseña incorrecta"
-      })
+        message: "Correo electrónico o contraseña incorrecta",
+      });
     }
 
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: 24 * 60,
     });
-    
+
     return res.send({
       success: true,
-      token
+      token,
     });
-
   } catch (error) {
     return res.status(500).json({
       succes: false,

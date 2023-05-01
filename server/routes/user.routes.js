@@ -1,11 +1,13 @@
 import { Router } from "express";
 import * as userController from "../controllers/userController.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
+import { validateUniqueEmailUsername, validateUserUpdateFields } from "../middlewares/userValidation.js";
 
 const router = Router();
 
-router.get("/", userController.getUsers);
-router.get("/:id", userController.getUser);
-router.put("/:id", userController.updateUser);
-router.delete("/:id", userController.deleteUser);
+router.get("/", [verifyToken], userController.getUsers);
+router.get("/:id", [verifyToken], userController.getUser);
+router.put("/:id", [verifyToken, validateUserUpdateFields, validateUniqueEmailUsername], userController.updateUser);
+router.delete("/:id", [verifyToken], userController.deleteUser);
 
 export default router;
