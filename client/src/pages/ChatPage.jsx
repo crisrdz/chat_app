@@ -1,31 +1,47 @@
 import { useState } from "react";
 import ChatBox from "../components/ChatBox";
-import {METHOD} from '../config/constants.js'
+import { METHOD } from "../config/constants.js";
+import { getChat } from "../api/chat";
+import { useLoaderData } from "react-router-dom";
 
-export async function action ({request}) {
-  if(request.method === METHOD.PUT) {
+export async function loader({ params }) {
+  const token = localStorage.getItem("token");
+
+  const { data } = await getChat(token, params.id);
+
+  console.log(data);
+
+  return data;
+}
+
+export async function action({ request }) {
+  if (request.method === METHOD.PUT) {
     console.log(request);
   }
-  
+
   return null;
 }
 
 function ChatPage() {
+  const data = useLoaderData();
+  const userId = data.userId;
+  const messages = [];
 
-  //TODO: Hacer petición a API
-  const [chat, setChat] = useState({
-    user: "Cristofer",
-    messages: [
-      {message: "¿Todo bien?", mine: true},
-      {message: "¿Qué tal?", mine: true},
-      {message: "Hola", mine: false},
-      {message: "Hola", mine: true},
-    ]
+  data.chat.messages.forEach((message) => {
+    const mine = message.user === userId ? true : false;
+    messages.unshift({ message: message.body, mine });
   });
 
-  return (
-    <ChatBox chatState={{chat, setChat}} />
-  )
+  const username = data.chat.users.find(user => user.id !== userId).username;
+
+  const [chat, setChat] = useState({
+    user: username,
+    messages
+  });
+
+  console.log(chat);
+
+  return <ChatBox chatState={{ chat, setChat }} />;
 }
 
-export default ChatPage
+export default ChatPage;

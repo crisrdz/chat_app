@@ -1,38 +1,28 @@
 import { useNavigate } from 'react-router-dom'
 import './Chat.css';
 
-function Chat({chat}) {
+function Chat({chat, userId}) {
   const navigate = useNavigate();
 
-  //TODO: ELiminar esto
-  if(!chat) {
-    chat = {
-      id: 1,
-      username: "Cristofer",
-      messages: [
-        "Hola",
-        "Q tal"
-      ]
-    };
-  };
-
   function handleClick() {
-    navigate(`${chat.id}`)
+    navigate(`${chat._id}`)
   }
+
+  const user = chat.users.find(user => user._id !== userId);
 
   return (
     <div className='chat' onClick={handleClick}>
       <div className='chat__left'>
         <div className="chat__left__user-image">
-          {chat.username[0]}
+          {user.username[0]}
         </div>
       </div>
       <div className='chat__right'>
         <h6 className='chat__right__item chat__right__username'>
-          {chat.username}
+          {user.username}
         </h6>
         <p className='chat__right__item chat__right__last-message'>
-          {chat.messages[0]}
+          {chat.messages ? chat.messages[0] : ""}
         </p>
       </div>
     </div>

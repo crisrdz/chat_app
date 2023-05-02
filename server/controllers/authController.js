@@ -15,7 +15,7 @@ export const signUp = async (req, res) => {
     const userSaved = await newUser.save();
 
     const token = jwt.sign({ userId: userSaved._id }, SECRET_KEY, {
-      expiresIn: 24 * 60,
+      expiresIn: 24 * 60 * 60,
     });
 
     return res.json({
@@ -44,7 +44,7 @@ export const signIn = async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
-      expiresIn: 24 * 60,
+      expiresIn: 24 * 60 * 60,
     });
 
     return res.send({

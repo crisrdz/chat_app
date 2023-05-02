@@ -8,6 +8,12 @@ const chatSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    messages: [
+      {
+        ref: "Message",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   {
     timestamps: true,

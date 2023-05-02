@@ -1,25 +1,40 @@
-import {createBrowserRouter} from 'react-router-dom';
+import { Navigate, createBrowserRouter } from "react-router-dom";
 
-import ChatsPage from '../pages/ChatsPage';
-import ChatPage, {action as chatAction} from '../pages/ChatPage'
-import LandingPage from '../pages/LandingPage';
+import ChatsPage, { loader as chatsLoader } from "../pages/ChatsPage";
+import ChatPage, { loader as chatLoader, action as chatAction } from "../pages/ChatPage";
+import LandingPage, { loader as landingLoader } from "../pages/LandingPage";
+import { action as loginAction } from "../components/modals/Login";
+import { action as registerAction } from "../components/modals/Register";
 
 const router = createBrowserRouter([
   {
-    index: true,
-    element: <LandingPage />
+    path: "/",
+    element: <LandingPage />,
+    loader: landingLoader,
+    children: [
+      {
+        path: "login",
+        action: loginAction,
+      },
+      {
+        path: "register",
+        action: registerAction,
+      },
+    ],
   },
   {
-    path: "chats",
+    path: "/chats",
     element: <ChatsPage />,
+    loader: chatsLoader,
     children: [
       {
         path: ":id",
         element: <ChatPage />,
+        loader: chatLoader,
         action: chatAction,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]);
 
 export default router;
