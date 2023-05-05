@@ -20,7 +20,10 @@ export const signUp = async (req, res) => {
 
     return res.json({
       success: true,
-      token,
+      user: {
+        username: userSaved.username,
+        token,
+      },
     });
   } catch (error) {
     return res.status(500).json({
@@ -49,7 +52,10 @@ export const signIn = async (req, res) => {
 
     return res.send({
       success: true,
-      token,
+      user: {
+        username: user.username,
+        token,
+      },
     });
   } catch (error) {
     return res.status(500).json({

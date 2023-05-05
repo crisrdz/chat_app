@@ -6,7 +6,19 @@
     height: calc(100vh - var(--header-height))
   }
 
-  .chat-page-left, .chat-page-right {
+  .chat-page-left {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .chat-page-left__new-chat-btn {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .chat-page-right {
     position: relative;
   }
 }

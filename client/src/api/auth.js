@@ -8,16 +8,15 @@ export async function signin (user) {
       body: JSON.stringify(user),
     });
   
-    const dataJson = await data.json();
-  
     if(!data.ok) {
-      throw dataJson;
+      throw data;
     }
 
-    return dataJson;
+    const dataJSON = await data.json();
+
+    return dataJSON;
   } catch (error) {
-    console.error(new Error(error.message));
-    return error;
+    return Promise.reject(error);
   }
 }
 
@@ -31,14 +30,14 @@ export async function signup (user) {
       body: JSON.stringify(user),
     });
   
-    const dataJson = await data.json();
-  
     if(!data.ok) {
-      throw dataJson;
+      throw data;
     }
 
-    return dataJson;
+    const dataJSON = await data.json();
+
+    return dataJSON;
   } catch (error) {
-    return error;
+    return Promise.reject(error);
   }
 }

@@ -6,7 +6,13 @@ import { PORT } from "./config.js";
 import "./db.js";
 
 const server = createServer(app);
-const io = new ServerSocket(server);
+
+//TODO: Eliminar cors antes de deploy
+const io = new ServerSocket(server, {
+  cors: {
+    origin: "http://localhost:5173"
+  }
+});
 
 server.listen(PORT);
 sockets(io);

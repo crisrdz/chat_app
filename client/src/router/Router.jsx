@@ -1,6 +1,6 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
-import ChatsPage, { loader as chatsLoader } from "../pages/ChatsPage";
+import ChatsPage, { loader as chatsLoader, action as chatsAction } from "../pages/ChatsPage";
 import ChatPage, { loader as chatLoader, action as chatAction } from "../pages/ChatPage";
 import LandingPage, { loader as landingLoader } from "../pages/LandingPage";
 import { action as loginAction } from "../components/modals/Login";
@@ -26,13 +26,14 @@ const router = createBrowserRouter([
     path: "/chats",
     element: <ChatsPage />,
     loader: chatsLoader,
+    action: chatsAction,
     children: [
       {
         path: ":id",
         element: <ChatPage />,
         loader: chatLoader,
         action: chatAction,
-      },
+      }
     ],
   },
 ]);

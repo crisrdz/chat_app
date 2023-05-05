@@ -1,22 +1,29 @@
-import { useState } from "react";
 import ChatBox from "../components/ChatBox";
 import { METHOD } from "../config/constants.js";
-import { getChat } from "../api/chat";
-import { useLoaderData } from "react-router-dom";
+import { getChat, deleteChat } from "../api/chat";
+import { redirect, useLoaderData } from "react-router-dom";
+import { useEffect, useState } from 'react'
 
 export async function loader({ params }) {
-  const token = localStorage.getItem("token");
+  const { token } = JSON.parse(localStorage.getItem("user"));
 
-  const { data } = await getChat(token, params.id);
-
-  console.log(data);
+  const data = await getChat(token, params.id);
 
   return data;
 }
 
-export async function action({ request }) {
+export async function action({ params, request }) {
   if (request.method === METHOD.PUT) {
     console.log(request);
+  }
+
+  if(request.method === "DELETE"){
+
+    const { token } = JSON.parse(localStorage.getItem("user"));
+
+    await deleteChat(token, params.id)
+
+    return redirect("/chats");
   }
 
   return null;
@@ -24,24 +31,8 @@ export async function action({ request }) {
 
 function ChatPage() {
   const data = useLoaderData();
-  const userId = data.userId;
-  const messages = [];
-
-  data.chat.messages.forEach((message) => {
-    const mine = message.user === userId ? true : false;
-    messages.unshift({ message: message.body, mine });
-  });
-
-  const username = data.chat.users.find(user => user.id !== userId).username;
-
-  const [chat, setChat] = useState({
-    user: username,
-    messages
-  });
-
-  console.log(chat);
-
-  return <ChatBox chatState={{ chat, setChat }} />;
+   
+  return <ChatBox hasChat={true} key={data.chat._id}  />;
 }
 
 export default ChatPage;

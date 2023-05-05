@@ -8,7 +8,7 @@ import { useLoaderData } from "react-router-dom";
 import Register from "../components/modals/Register";
 
 export function loader() {
-  return localStorage.getItem("token");
+  return JSON.parse(localStorage.getItem("user"))?.token;
 }
 
 function LandingPage() {
@@ -22,7 +22,7 @@ function LandingPage() {
         <NavbarMenu
           setShowSignin={setShowSignin}
           setShowSignup={setShowSignup}
-          isLogged={isLogged}
+          isLogged={!!isLogged}
         />
       </Header>
       

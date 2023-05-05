@@ -7,26 +7,33 @@ export const getChats = async (req, res) => {
     const limit = 10;
     const skip = limit * (page - 1);
 
-    const chats = await Chat.find({ users: req.userId }, null, {
-      limit,
-      skip,
-    })
-      .populate({ path: "users", select: "_id username" })
+    const chats = await Chat.find(
+      { users: req.userId },
+      {
+        id: 1,
+        users: 1,
+        messages: 1,
+      },
+      {
+        limit,
+        skip,
+        sort: "-updatedAt",
+      }
+    )
+      .populate({ path: "users", select: "-_id username" })
       .populate({
         path: "messages",
-        select: "body",
+        select: "-_id body user",
         options: {
           sort: "-createdAt",
           limit: 1,
         },
-      });
+      })
+      .lean();
 
     return res.json({
       success: true,
-      data: {
-        userId: req.userId,
-        chats,
-      }
+      chats,
     });
   } catch (error) {
     return res.status(500).json({
@@ -39,17 +46,24 @@ export const getChats = async (req, res) => {
 export const getChat = async (req, res) => {
   try {
     const chatId = req.params.id;
-    const chat = await Chat.findById(chatId).populate("messages").populate({path: "users", select: "username _id"});
+    const chat = await Chat.findById(chatId, { id: 1, users: 1, messages: 1 })
+      .populate({ path: "users", select: "username -_id" })
+      .populate({
+        path: "messages",
+        select: "-_id body user",
+        options: { sort: "-createdAt" },
+        populate: {
+          path: "user",
+          select: "-_id username"
+        }
+      })
+      .lean();
 
     return res.json({
       success: true,
-      data: {
-        userId: req.userId,
-        chat,
-      }
+      chat,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       success: false,
       message: defaultError,
@@ -61,15 +75,19 @@ export const createChat = async (req, res) => {
   try {
     const { friendId } = req.body;
 
-    const chat = new Chat({
+    const chat = await Chat.create({
       users: [req.userId, friendId],
     });
 
-    const chatSaved = await chat.save();
+    await Chat.populate(chat, { path: "users", select: "username -_id" });
 
     return res.json({
       success: true,
-      chat: chatSaved,
+      chat: {
+        _id: chat._id,
+        users: chat.users,
+        messages: chat.messages,
+      },
     });
   } catch (error) {
     return res.status(500).json({
@@ -79,10 +97,23 @@ export const createChat = async (req, res) => {
   }
 };
 
-export const updateChat = async (req, res) => {
-  res.send("updateChat");
-};
-
 export const deleteChat = async (req, res) => {
-  res.send("deleteChat");
+  try {
+    const chatId = req.params.id;
+    const chat = await Chat.findByIdAndDelete(chatId);
+
+    if (!chat) {
+      return res.status(404).json({
+        success: false,
+        message: "Not found",
+      });
+    }
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: defaultError,
+    });
+  }
 };

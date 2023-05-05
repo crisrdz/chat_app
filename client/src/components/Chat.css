@@ -1,12 +1,13 @@
 .chat {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 20% 60% 20%;
 
   border: 2px solid var(--color-secondary);
   border-radius: 1rem;
 
   padding: 0.3rem 0;
   margin: 6px 3px;
+  cursor: pointer;
 }
 
 .chat__left {
@@ -27,21 +28,75 @@
   width: 2.4rem;
 }
 
-.chat__right {
+.chat__center {
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
 }
 
-.chat__right__item {
+.chat__center__item {
   margin: 2px 0;
 }
 
-.chat__right__username {
+.chat__center__username {
   font-size: 1rem;
 }
 
-.chat__right__last-message {
+.chat__center__last-message {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: grey;
+}
+
+.chat__right {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat__right__btn-menu {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.5rem;
+
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+  background-color: var(--color-lg-secondary);
+  color: var(--color-primary);
+
+  transition: all 0.3s ease;
+}
+
+.chat__right__btn-menu:hover {
+  background-color: var(--color-tertiary)
+}
+
+.chat__right__menu {
+  position: absolute;
+  top: calc(50% + calc(1.5rem / 2));
+  right: calc(50% - calc(1.7rem / 2));
+  margin-top: 3px;
+}
+
+.chat__right__menu__item {
+  cursor: pointer;
+  border: 1px solid rgb(240, 79, 79);
+  border-radius: 1rem;
+  background-color: rgb(255, 153, 153);
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.chat__right__menu__item:hover {
+  background-color: red;
 }
