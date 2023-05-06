@@ -112,3 +112,34 @@ export const deleteUser = async (req, res) => {
     });
   }
 };
+
+export const changeVisibility = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Usuario no encontrado",
+      });
+    }
+
+    console.log(user);
+
+    return res.json({
+      success: true,
+      user: {
+        _id: userUpdated._id,
+        email: userUpdated.email,
+        username: userUpdated.username,
+        createdAt: userUpdated.createdAt,
+        updatedAt: userUpdated.updatedAt,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: defaultError,
+    });
+  }
+}

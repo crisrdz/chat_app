@@ -54,8 +54,8 @@ export const getChat = async (req, res) => {
         options: { sort: "-createdAt" },
         populate: {
           path: "user",
-          select: "-_id username"
-        }
+          select: "-_id username",
+        },
       })
       .lean();
 
@@ -81,13 +81,18 @@ export const createChat = async (req, res) => {
 
     await Chat.populate(chat, { path: "users", select: "username -_id" });
 
+    const chatCleaned = {
+      _id: chat._id,
+      users: chat.users,
+      messages: chat.messages,
+    };
+
+    const io = req.app.get("io");
+    io.to(`user:${friendId}`).emit("server:newchat", chatCleaned);
+
     return res.json({
       success: true,
-      chat: {
-        _id: chat._id,
-        users: chat.users,
-        messages: chat.messages,
-      },
+      chat: chatCleaned,
     });
   } catch (error) {
     return res.status(500).json({
@@ -100,13 +105,20 @@ export const createChat = async (req, res) => {
 export const deleteChat = async (req, res) => {
   try {
     const chatId = req.params.id;
-    const chat = await Chat.findByIdAndDelete(chatId);
+    const chat = await Chat.findByIdAndDelete(chatId).lean();
 
     if (!chat) {
       return res.status(404).json({
         success: false,
         message: "Not found",
       });
+    }
+
+    const io = req.app.get("io");
+    const friendId = chat.users.find(user => user.toString() !== req.userId)?.toString();
+
+    if(friendId) {
+      io.to(`user:${friendId}`).emit("server:deletechat", chatId);
     }
 
     return res.sendStatus(204);

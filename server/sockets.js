@@ -1,10 +1,17 @@
 import jwt from "jsonwebtoken";
-import { SECRET_KEY } from "./config.js";
-import Chat from "./models/Chat.js";
-import Message from "./models/Message.js";
+import { newMessage } from "./sockets/messageSockets.js";
+import { SECRET_KEY } from './config.js';
 
 const sockets = (io) => {
   io.on("connection", (socket) => {
+    let userId;
+
+    socket.on("client:joinuser", (token) => {
+      const decoded = jwt.verify(token, SECRET_KEY);
+      userId = decoded.userId;
+      socket.join(`user:${userId}`);
+    })
+
     socket.on("client:joinchats", (chats) => {
       chats.forEach((chat) => {
         socket.join(`chat:${chat._id}`);
@@ -12,22 +19,7 @@ const sockets = (io) => {
     });
 
     socket.on("client:newmessage", async (message) => {
-      const { userId } = jwt.verify(message.userToken, SECRET_KEY);
-
-      const newMessage = new Message({
-        body: message.body,
-        chat: message.chat,
-        user: userId,
-      });
-
-      const messageSaved = await newMessage.save();
-      const chat = await Chat.findById(messageSaved.chat);
-
-      const messages = chat.messages;
-      messages.unshift(messageSaved._id);
-
-      chat.messages = messages;
-      await chat.save();
+      const messageSaved = await newMessage(message)
 
       socket.to(`chat:${message.chat}`).emit("server:newmessage", messageSaved);
     });

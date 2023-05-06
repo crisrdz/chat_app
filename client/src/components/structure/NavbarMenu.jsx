@@ -59,7 +59,7 @@ function NavbarMenu({ setShowSignin, setShowSignup, isLogged }) {
                 showMenu && "navbar__list__link--menu"
               }`}
               onClick={() => {
-                localStorage.removeItem("token");
+                localStorage.removeItem("user");
                 navigate("/");
               }}
             >

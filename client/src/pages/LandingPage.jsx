@@ -8,7 +8,13 @@ import { useLoaderData } from "react-router-dom";
 import Register from "../components/modals/Register";
 
 export function loader() {
-  return JSON.parse(localStorage.getItem("user"))?.token;
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if(user){
+    return user.token;
+  } else {
+    return null;
+  }
 }
 
 function LandingPage() {

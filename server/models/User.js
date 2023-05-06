@@ -15,6 +15,17 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    isPublic: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    friends: [
+      {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   {
     timestamps: true,

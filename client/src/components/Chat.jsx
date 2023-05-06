@@ -4,8 +4,11 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import './Chat.css';
 
 function Chat({chat, userId}) {
+  const { username } = JSON.parse(localStorage.getItem("user"));
   const [showMenu, setShowMenu] = useState(false)
   const navigate = useNavigate();
+
+  const friendUsername = chat.users[0].username === username ? chat.users[1].username : chat.users[0].username;
 
   function handleClick() {
     navigate(`${chat._id}`)
@@ -22,15 +25,15 @@ function Chat({chat, userId}) {
     <div className='chat' onClick={handleClick}>
       <div className='chat__left'>
         <div className="chat__left__user-image">
-          {user.username[0]}
+          { friendUsername[0] }
         </div>
       </div>
       <div className='chat__center'>
         <h6 className='chat__center__item chat__center__username'>
-          {user.username}
+          { friendUsername }
         </h6>
         <p className='chat__center__item chat__center__last-message'>
-          {chat.messages.length > 0 ? chat.messages[0].body : ""}
+          { chat.messages.length > 0 ? chat.messages[0].body : "" }
         </p>
       </div>
       <div className='chat__right'>

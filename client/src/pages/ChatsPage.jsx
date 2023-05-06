@@ -15,7 +15,10 @@ export async function loader() {
     const user = JSON.parse(localStorage.getItem("user"));
     const data = await getChats(user.token);
 
-    return data;
+    return {
+      data,
+      user
+    };
   } catch (error) {
     if(error.status == 401) {
       localStorage.removeItem("user");
@@ -46,7 +49,7 @@ export async function action({ request }) {
 
 function ChatsPage() {
   const outlet = useOutlet();
-  const data = useLoaderData();
+  const { data, user } = useLoaderData();
   const action = useActionData();
 
   const [chats, setChats] = useState(data.chats);
@@ -66,6 +69,7 @@ function ChatsPage() {
 
     socket.on("connect", () => {
       socket.emit("client:joinchats", chats);
+      socket.emit("client:joinuser", user.token);
     });
 
     socket.on("server:newmessage", replaceChats);
@@ -74,6 +78,26 @@ function ChatsPage() {
       socket.off("server:newmessage", replaceChats);
     };
   }, []);
+
+  useEffect(() => {
+    const newChat = (chat) => {
+      setChats([chat, ...chats]);
+    }
+
+    const deleteChat = (chatId) => {
+      const chatsCopy = [...chats];
+
+      setChats(chatsCopy.filter(chat => chat._id !== chatId));
+    }
+
+    socket.on("server:newchat", newChat);
+    socket.on("server:deletechat", deleteChat);
+
+    return () => {
+      socket.off("server:newchat", newChat);
+      socket.off("server:deletechat", deleteChat);
+    }
+  }, [chats])
 
   const replaceChats = (message) => {
     const chatsCopy = [...chats];
@@ -86,11 +110,10 @@ function ChatsPage() {
     });
 
     chat.messages = [{
-      body: message.body
+      body: message.body,
     }];
     
     chatsCopy.unshift(chat);
-    console.log(chatsCopy);
     setChats(chatsCopy);
   };
 
@@ -100,7 +123,9 @@ function ChatsPage() {
 
   return (
     <>
-      <Header></Header>
+      <Header>
+        <p>¡Hola, {user.username}!</p>
+      </Header>
       <main className="chat-page">
         <div className="chat-page-left">
           <div>

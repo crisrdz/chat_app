@@ -17,4 +17,6 @@ const io = new ServerSocket(server, {
 server.listen(PORT);
 sockets(io);
 
+app.set("io", io);
+
 console.log(`Listen on Port: ${PORT}`);
