@@ -7,9 +7,13 @@ const sockets = (io) => {
     let userId;
 
     socket.on("client:joinuser", (token) => {
-      const decoded = jwt.verify(token, SECRET_KEY);
-      userId = decoded.userId;
-      socket.join(`user:${userId}`);
+      try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        userId = decoded.userId;  
+        socket.join(`user:${userId}`);
+      } catch (error) {
+        socket.emit("server:error", "Token inválido");
+      }
     })
 
     socket.on("client:joinchats", (chats) => {
@@ -19,7 +23,7 @@ const sockets = (io) => {
     });
 
     socket.on("client:newmessage", async (message) => {
-      const messageSaved = await newMessage(message)
+      const messageSaved = await newMessage(message, userId);
 
       socket.to(`chat:${message.chat}`).emit("server:newmessage", messageSaved);
     });

@@ -124,7 +124,8 @@ export const changeVisibility = async (req, res) => {
       });
     }
 
-    console.log(user);
+    user.isPublic = !user.isPublic;
+    const userUpdated = await user.save();
 
     return res.json({
       success: true,
@@ -132,6 +133,7 @@ export const changeVisibility = async (req, res) => {
         _id: userUpdated._id,
         email: userUpdated.email,
         username: userUpdated.username,
+        isPublic: userUpdated.isPublic,
         createdAt: userUpdated.createdAt,
         updatedAt: userUpdated.updatedAt,
       },

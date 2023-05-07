@@ -5,11 +5,11 @@ import { validateUniqueEmailUsername, validateUserUpdateFields } from "../middle
 
 const router = Router();
 
+router.put("/visibility", [verifyToken], userController.changeVisibility);
+
 router.get("/", [verifyToken], userController.getUsers);
 router.get("/:id", [verifyToken], userController.getUser);
 router.put("/:id", [verifyToken, validateUserUpdateFields, validateUniqueEmailUsername], userController.updateUser);
 router.delete("/:id", [verifyToken], userController.deleteUser);
-
-router.put("/visibility", [verifyToken], userController.changeVisibility);
 
 export default router;

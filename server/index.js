@@ -4,14 +4,15 @@ import app from "./app.js";
 import sockets from "./sockets.js";
 import { PORT } from "./config.js";
 import "./db.js";
+import "./initialValue.js";
 
 const server = createServer(app);
 
 //TODO: Eliminar cors antes de deploy
 const io = new ServerSocket(server, {
   cors: {
-    origin: "http://localhost:5173"
-  }
+    origin: "http://localhost:5173",
+  },
 });
 
 server.listen(PORT);

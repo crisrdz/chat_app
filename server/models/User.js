@@ -20,18 +20,30 @@ const userSchema = new Schema(
       required: true,
       default: false,
     },
-    friends: [
+    roles: [
       {
-        ref: "User",
+        ref: "Role",
         type: Schema.Types.ObjectId,
+        required: true
       },
     ],
+    friends: {
+      type: [{
+        ref: "User",
+        type: Schema.Types.ObjectId,
+      }],
+      validate: [friendsLimit, "{PATH} exceeds the limit of 50"]
+    },
   },
   {
     timestamps: true,
     versionKey: false,
   }
 );
+
+function friendsLimit(val) {
+  return val.length <= 50;
+}
 
 userSchema.statics.encryptPassword = async (password) => {
   const encryptedPassword = await bcrypt.hash(password, 10);

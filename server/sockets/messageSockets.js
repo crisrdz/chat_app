@@ -1,11 +1,7 @@
-import jwt from "jsonwebtoken";
 import Chat from "../models/Chat.js";
 import Message from "../models/Message.js";
-import { SECRET_KEY } from "../config.js";
 
-export async function newMessage(message) {
-  const { userId } = jwt.verify(message.userToken, SECRET_KEY);
-
+export async function newMessage(message, userId) {
   const newMessage = new Message({
     body: message.body,
     chat: message.chat,

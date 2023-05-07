@@ -16,6 +16,11 @@ const messageSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
+    seen: {
+      type: Boolean,
+      required: true,
+      defalut: false
+    }
   },
   {
     timestamps: true,
