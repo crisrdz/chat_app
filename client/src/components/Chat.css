@@ -1,13 +1,24 @@
 .chat {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 20% auto 20%;
+  gap: 0.5rem;
 
   border: 2px solid var(--color-secondary);
   border-radius: 1rem;
 
-  padding: 0.3rem 0;
+  padding: 0.3rem;
   margin: 6px 3px;
   cursor: pointer;
+}
+
+.chat--hidden {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .chat--hidden {
+    display: grid;
+  }
 }
 
 .chat__left {

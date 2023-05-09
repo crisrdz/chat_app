@@ -125,7 +125,7 @@ function ChatsPage() {
     <>
       <main className="chat-page">
         <div className="chat-page-left">
-          <div>
+          <div className="chat-page-left__chats">
             {chats.map((chat, index) => (
               <Chat key={index} chat={chat} />
             ))}

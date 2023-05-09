@@ -17,7 +17,7 @@ function ModalNewChat({setShow}) {
   }
 
   return (
-    <ModalForm submit={"Nuevo chat"} action={"/chats"} setShow={setShow} onSubmit={() => setShow(false)}>
+    <ModalForm submit={"Nuevo chat"} action={""} setShow={setShow} onSubmit={() => setShow(false)}>
       <h1 className="modal-title">Nuevo chat</h1>
 
       <select name="user">

@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import { Form, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Form, useNavigate, useParams } from 'react-router-dom'
 import { AiOutlineMenu } from 'react-icons/ai'
 import './Chat.css';
 
-function Chat({chat, userId}) {
+function Chat({chat}) {
   const { username } = JSON.parse(localStorage.getItem("user"));
   const [showMenu, setShowMenu] = useState(false)
+  const { id } = useParams();
+  
   const navigate = useNavigate();
 
   const friendUsername = chat.users[0].username === username ? chat.users[1].username : chat.users[0].username;
@@ -19,10 +21,12 @@ function Chat({chat, userId}) {
     setShowMenu(prev => !prev)
   }
 
-  const user = chat.users[0];
+  useEffect(() => {
+    setShowMenu(false);
+  }, [chat])
 
   return (
-    <div className='chat' onClick={handleClick}>
+    <div className={`chat ${id && "chat--hidden"}`} onClick={handleClick}>
       <div className='chat__left'>
         <div className="chat__left__user-image">
           { friendUsername[0] }
@@ -42,7 +46,12 @@ function Chat({chat, userId}) {
         </button>
         {showMenu && (
           <div className="chat__right__menu">
-            <Form action={`/chats/${chat._id}`} method='DELETE' >
+            <Form action={`/user/chats/${chat._id}`} method='DELETE' >
+              {
+                id && (
+                  <input type="hidden" name="id" value={id} readOnly />
+                )
+              }
               <button type="submit" className='chat__right__menu__item'>Eliminar chat</button>
             </Form>
           </div>

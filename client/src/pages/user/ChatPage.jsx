@@ -2,7 +2,6 @@ import ChatBox from "../../components/ChatBox";
 import { METHOD } from "../../config/constants.js";
 import { getChat, deleteChat } from "../../api/chat";
 import { redirect, useLoaderData } from "react-router-dom";
-import { useEffect, useState } from 'react'
 
 export async function loader({ params }) {
   const { token } = JSON.parse(localStorage.getItem("user"));
@@ -17,13 +16,19 @@ export async function action({ params, request }) {
     console.log(request);
   }
 
-  if(request.method === "DELETE"){
-
+  if (request.method === "DELETE") {
     const { token } = JSON.parse(localStorage.getItem("user"));
 
-    await deleteChat(token, params.id)
+    await deleteChat(token, params.id);
 
-    return redirect("/chats");
+    const formData = await request.formData();
+    const id = formData.get("id");
+
+    if (id && id !== params.id) {
+      return redirect(`/user/chats/${id}`);
+    }
+
+    return redirect("/user/chats");
   }
 
   return null;
@@ -31,8 +36,8 @@ export async function action({ params, request }) {
 
 function ChatPage() {
   const data = useLoaderData();
-   
-  return <ChatBox hasChat={true} key={data.chat._id}  />;
+
+  return <ChatBox hasChat={true} key={data.chat._id} />;
 }
 
 export default ChatPage;
