@@ -24,7 +24,7 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.userId, { password: 0 });
+    const user = await User.findById(req.userId, { email: 1, username: 1, isPublic: 1, _id: 0 });
 
     if (!user) {
       return res.status(404).json({
@@ -78,11 +78,7 @@ export const updateUser = async (req, res) => {
     return res.json({
       success: true,
       user: {
-        _id: userUpdated._id,
-        email: userUpdated.email,
         username: userUpdated.username,
-        createdAt: userUpdated.createdAt,
-        updatedAt: userUpdated.updatedAt,
       },
     });
   } catch (error) {

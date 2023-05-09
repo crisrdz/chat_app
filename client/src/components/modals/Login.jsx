@@ -13,7 +13,7 @@ export async function action({ request }) {
 
     localStorage.setItem("user", JSON.stringify(data.user));
 
-    return redirect("/chats");
+    return redirect("/user/chats");
 
   } catch (error) {
     return redirect("/");

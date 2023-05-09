@@ -1,0 +1,18 @@
+.profile-nav {
+  display: flex;
+  border: 2px solid var(--color-secondary);
+  border-radius: 1rem;
+  background-color: var(--color-lg-primary);
+  padding: 0.9rem;
+  font-size: 0.8rem;
+
+  width: 80%;
+  max-width: 20rem;
+  justify-content: space-between;
+
+  margin: 1rem auto;
+}
+
+.profile-nav__item {
+  text-decoration: none;
+}

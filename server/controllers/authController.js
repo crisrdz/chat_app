@@ -1,15 +1,18 @@
 import jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../config.js";
 import User from "../models/User.js";
+import Role from "../models/Role.js";
 
 export const signUp = async (req, res) => {
   try {
     const { email, username, passwordOne } = req.body;
+    const role = await Role.findOne({role: "User"});
 
     const newUser = new User({
       email,
       username,
       password: await User.encryptPassword(passwordOne),
+      roles: [role._id]
     });
 
     const userSaved = await newUser.save();

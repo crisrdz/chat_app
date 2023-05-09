@@ -6,7 +6,7 @@
   right: 0;
   
   background-color: var(--color-white);
-  z-index: 4;
+  z-index: -2;
   border: 2px solid var(--color-primary);
   border-radius: 1rem;
   margin: 4px;

@@ -8,7 +8,6 @@ export const userCreateSchema = Joi.object({
 });
 
 export const userUpdateSchema = Joi.object({
-  email: Joi.string().email().required(),
   username: Joi.string().alphanum().min(3).max(30).required(),
   passwordOne: Joi.string().required(),
   passwordTwo: Joi.string().required().valid(Joi.ref("passwordOne")),

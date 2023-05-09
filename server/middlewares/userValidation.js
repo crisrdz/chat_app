@@ -51,9 +51,8 @@ export const validateUserCreateFields = (req, res, next) => {
 
 export const validateUserUpdateFields = (req, res, next) => {
   try {
-    const { email, username, passwordOne, passwordTwo, passwordOld } = req.body;
+    const { username, passwordOne, passwordTwo, passwordOld } = req.body;
     const { value, error } = userUpdateSchema.validate({
-      email,
       username,
       passwordOne,
       passwordTwo,

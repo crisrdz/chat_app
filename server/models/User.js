@@ -24,15 +24,18 @@ const userSchema = new Schema(
       {
         ref: "Role",
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
       },
     ],
     friends: {
-      type: [{
-        ref: "User",
-        type: Schema.Types.ObjectId,
-      }],
-      validate: [friendsLimit, "{PATH} exceeds the limit of 50"]
+      type: [
+        {
+          ref: "User",
+          type: Schema.Types.ObjectId,
+          unique: true,
+        },
+      ],
+      validate: [friendsLimit, "{PATH} exceeds the limit of 50"],
     },
   },
   {

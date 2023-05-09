@@ -7,9 +7,9 @@ const router = Router();
 
 router.put("/visibility", [verifyToken], userController.changeVisibility);
 
-router.get("/", [verifyToken], userController.getUsers);
-router.get("/:id", [verifyToken], userController.getUser);
-router.put("/:id", [verifyToken, validateUserUpdateFields, validateUniqueEmailUsername], userController.updateUser);
-router.delete("/:id", [verifyToken], userController.deleteUser);
+router.get("/all", [verifyToken], userController.getUsers);
+router.get("/", [verifyToken], userController.getUser);
+router.put("/", [verifyToken, validateUserUpdateFields, validateUniqueEmailUsername], userController.updateUser);
+router.delete("/", [verifyToken], userController.deleteUser);
 
 export default router;

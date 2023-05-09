@@ -47,7 +47,7 @@ function NavbarMenu({ setShowSignin, setShowSignup, isLogged }) {
         ) : (
           <>
             <NavLink
-              to="/chats"
+              to="/user/chats"
               className={`navbar__list__link ${
                 showMenu && "navbar__list__link--menu"
               }`}
