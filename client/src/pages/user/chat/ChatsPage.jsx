@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Outlet, redirect, useActionData, useLoaderData, useOutlet } from "react-router-dom";
-import Header from "../../components/structure/Header";
-import Chat from "../../components/Chat";
-import ChatBox from "../../components/ChatBox";
-import { getChats } from "../../api/chat";
+import Chat from "../../../components/Chat";
+import ChatBox from "../../../components/ChatBox";
+import { getChats } from "../../../api/chat";
 import "./ChatsPage.css";
-import NewChat from "../../components/NewChat";
-import ModalNewChat from "../../components/modals/ModalNewChat";
-import { createChat } from "../../api/chat";
-import { socket } from '../../socket'
+import NewChat from "../../../components/NewChat";
+import ModalNewChat from "../../../components/modals/ModalNewChat";
+import { createChat } from "../../../api/chat";
+import { socket } from '../../../socket'
 
 export async function loader() {
   try {

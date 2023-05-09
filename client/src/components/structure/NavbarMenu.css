@@ -45,6 +45,16 @@
   color: var(--color-secondary);
 }
 
+.navbar__list__logout-link {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: orangered;
+}
+
+.navbar__list__logout-link:hover {
+  color: red;
+}
+
 @media (min-width: 768px) {
   .navbar__section__btn-menu {
     display: none;
@@ -69,5 +79,13 @@
   
   .navbar__list__link--menu:hover {
     color: var(--color-lg-secondary);
+  }
+
+  .navbar__list__logout-link {
+    color: rgb(243, 180, 180);
+  }
+  
+  .navbar__list__logout-link:hover {
+    color: rgb(243, 164, 164);
   }
 }

@@ -3,11 +3,11 @@ import { createBrowserRouter } from "react-router-dom";
 import ChatsPage, {
   loader as chatsLoader,
   action as chatsAction,
-} from "../pages/user/ChatsPage";
+} from "../pages/user/chat/ChatsPage";
 import ChatPage, {
   loader as chatLoader,
   action as chatAction,
-} from "../pages/user/ChatPage";
+} from "../pages/user/chat/ChatPage";
 import LandingPage, { loader as landingLoader } from "../pages/LandingPage";
 import { action as loginAction } from "../components/modals/Login";
 import { action as registerAction } from "../components/modals/Register";

@@ -1,6 +1,6 @@
-import ChatBox from "../../components/ChatBox";
-import { METHOD } from "../../config/constants.js";
-import { getChat, deleteChat } from "../../api/chat";
+import ChatBox from "../../../components/ChatBox";
+import { METHOD } from "../../../config/constants.js";
+import { getChat, deleteChat } from "../../../api/chat";
 import { redirect, useLoaderData } from "react-router-dom";
 
 export async function loader({ params }) {

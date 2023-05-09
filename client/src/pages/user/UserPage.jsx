@@ -26,7 +26,7 @@ function UserPage() {
             <div className="navbar-user__user-menu__menu" ref={refMenu}>
               <Link to={"/user/profile"} className="navbar-user__user-menu__menu__item">Perfil</Link>
               <Link to={"/user/chats"} className="navbar-user__user-menu__menu__item">Chats</Link>
-              <Link to={"/"} className="navbar-user__user-menu__menu__item">Cerrar sesión</Link>
+              <Link to={"/"} className="navbar-user__user-menu__menu__item navbar-user__user-menu__menu__logout-item" onClick={() => localStorage.removeItem("user")}>Cerrar sesión</Link>
             </div>
           </div>
         </div>

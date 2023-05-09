@@ -55,9 +55,7 @@ function NavbarMenu({ setShowSignin, setShowSignup, isLogged }) {
               Chats
             </NavLink>
             <li
-              className={`navbar__list__link ${
-                showMenu && "navbar__list__link--menu"
-              }`}
+              className={`navbar__list__logout-link`}
               onClick={() => {
                 localStorage.removeItem("user");
                 navigate("/");
