@@ -1,10 +1,11 @@
 import { Form } from "react-router-dom";
 import { AiFillCloseSquare } from "react-icons/ai";
-import "./ModalForm.css";
+import "./Modal.css";
 
-function ModalForm({ children, submit, action, setShow }) {
+function ModalForm({ children, submit, action, setShow = null }) {
   return (
     <Form method="POST" action={action} className="modal">
+      
       <AiFillCloseSquare
         className="modal__btn-close"
         onClick={() => setShow(false)}

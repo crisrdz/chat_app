@@ -1,0 +1,162 @@
+.modal {
+  position: fixed;
+  z-index: 5;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: 2rem;
+  padding: 2rem;
+
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  animation: showModal 0.5s ease forwards;
+}
+
+.modal-tabs {
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 25rem;
+}
+
+@keyframes showModal {
+  100% {
+    opacity: 1;
+  }
+}
+
+.modal__btn-close {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.2rem;
+  color: red;
+  font-size: 1.3rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.modal__title {
+  margin: 1.2rem 0 0.7rem;
+  text-align: center;
+}
+
+.modal__input {
+  border: 1px solid var(--color-primary);
+  border-radius: 1rem;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+  background-color: var(--color-white);
+  display: flex;
+}
+
+.modal__input:focus-within {
+  outline: 1px solid yellow;
+}
+
+.modal__input__none {
+  padding: 0;
+  border: 0;
+  background: 0;
+
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  font-size: 0.9rem;
+}
+
+.modal__input__none:focus {
+  outline: none;
+}
+
+.modal__input__icon {
+  width: max-content;
+  font-size: 1.1rem;
+}
+
+.modal__input__icon--loading {
+  color: blue;
+  animation: loading 0.9s infinite;
+}
+
+@keyframes loading {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.modal__input__icon--success {
+  color: var(--color-green-primary);
+}
+
+.modal__input__icon--error {
+  color: red;
+}
+
+.modal__input-text--error {
+  color: red;
+}
+
+.modal__btn-submit {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: var(--color-primary);
+
+  width: max-content;
+  border: 1px solid var(--color-primary);
+  border-radius: 1rem;
+
+  background-color: var(--color-lg-primary);
+  padding: 0.5rem;
+  align-self: center;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.modal__btn-submit:hover {
+  background-color: var(--color-lg-secondary);
+}
+
+.tab {
+  border: 1px solid var(--color-primary);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.tab__tab-header {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 2rem;
+  border-bottom: 1px solid var(--color-tertiary);
+}
+
+.tab__tab-header__item {
+  font-size: 0.9rem;
+  border: 0;
+  background-color: var(--color-lg-primary);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.tab__tab-header__item:hover {
+  background-color: var(--color-lg-secondary);
+}
+
+.tab__tab-header__item--active {
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.tab__tab-body {
+  padding: 1rem;
+}
+
+.modal__tab--hidden {
+  display: none !important;
+}

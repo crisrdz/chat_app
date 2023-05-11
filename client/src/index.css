@@ -5,6 +5,10 @@
   --color-tertiary: #CDC1FF;
   --color-lg-primary: #F5EFFF;
   --color-lg-secondary: #E5D9F2;
+
+  --color-green-primary: #3B7861;
+  --color-green-secondary: #67BDAF;
+  --color-green-lg: #B5EAD7;
 }
 
 body {

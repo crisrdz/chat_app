@@ -8,6 +8,7 @@ const router = Router();
 router.put("/visibility", [verifyToken], userController.changeVisibility);
 
 router.get("/all", [verifyToken], userController.getUsers);
+router.get("/:username", [verifyToken], userController.getUserByUsername);
 router.get("/", [verifyToken], userController.getUser);
 router.put("/", [verifyToken, validateUserUpdateFields, validateUniqueEmailUsername], userController.updateUser);
 router.delete("/", [verifyToken], userController.deleteUser);

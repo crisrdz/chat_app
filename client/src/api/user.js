@@ -83,3 +83,20 @@ export async function changeVisibility(token) {
     return Promise.reject(error);
   }
 }
+
+export async function getUserByUsername(token, username) {
+  try {
+    const data = await fetch(`/api/user/${username}`, {
+      method: "GET",
+      headers: {
+        "X-Access-Token": token,
+      },
+    });
+
+    if (!data.ok) {
+      throw data;
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}

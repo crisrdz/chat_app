@@ -141,3 +141,26 @@ export const changeVisibility = async (req, res) => {
     });
   }
 }
+
+export async function getUserByUsername(req, res) {
+  try {
+    const username = req.params.username;
+
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Usuario no encontrado",
+      });
+    }
+
+    return res.sendStatus(204);
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: defaultError,
+    });
+  }
+}

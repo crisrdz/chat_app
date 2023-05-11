@@ -1,0 +1,36 @@
+.tab__table {
+  font-size: 0.9rem;
+  text-align: center;
+  border-spacing: 0;
+  border: 1px solid var(--color-primary);
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .tab__table {
+    font-size: 1rem;
+  }
+}
+
+.tab__table__td {
+  border: 1px solid var(--color-primary);
+  padding: 0.4rem;
+}
+
+.tab__table__td__btn {
+  border: 0;
+  padding: 0;
+  margin: auto;
+  background-color: inherit;
+  display: flex;
+}
+
+.tab__table__td__btn__icon {
+  color: red;
+  font-size: 1.2rem;
+}
+
+.tab__container {
+  display: flex;
+  flex-direction: column;
+}

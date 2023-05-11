@@ -4,10 +4,11 @@ import Chat from "../../../components/Chat";
 import ChatBox from "../../../components/ChatBox";
 import { getChats } from "../../../api/chat";
 import "./ChatsPage.css";
-import NewChat from "../../../components/NewChat";
+import Button from "../../../components/Button";
 import ModalNewChat from "../../../components/modals/ModalNewChat";
 import { createChat } from "../../../api/chat";
 import { socket } from '../../../socket'
+import ModalFriends from "../../../components/modals/friends/ModalFriends";
 
 export async function loader() {
   try {
@@ -52,14 +53,15 @@ function ChatsPage() {
   const action = useActionData();
 
   const [chats, setChats] = useState(data.chats);
-  const [show, setShow] = useState(false)
+  const [showNewChat, setShowNewChat] = useState(false)
+  const [showFriends, setShowFriends] = useState(false)
 
   useEffect(() => {
     setChats(data.chats);
   }, [data]);
 
   useEffect(() => {
-    setShow(false);
+    setShowNewChat(false);
     setChats(data.chats);
   }, [action])
 
@@ -116,8 +118,12 @@ function ChatsPage() {
     setChats(chatsCopy);
   };
 
-  function handleOpenModal() {
-    setShow(prev => !prev);
+  function handleOpenModalChat() {
+    setShowNewChat(prev => !prev);
+  }
+
+  function handleOpenModalFriends() {
+    setShowFriends(prev => !prev);
   }
 
   return (
@@ -130,12 +136,20 @@ function ChatsPage() {
             ))}
           </div>
           <div className="chat-page-left__new-chat-btn">
-            <NewChat onClick={handleOpenModal} />
+            <Button onClick={handleOpenModalChat} customClasses="btn-color-violet">
+              Nuevo Chat
+            </Button>
+            <Button onClick={handleOpenModalFriends} customClasses="btn-color-green">
+              Amigos
+            </Button>
           </div>
         </div>
 
         {
-          show && <ModalNewChat setShow={setShow}/>
+          showNewChat && <ModalNewChat setShow={setShowNewChat}/>
+        }
+        {
+          showFriends && <ModalFriends setShow={setShowFriends}/>
         }
 
         <div className="chat-page-right">

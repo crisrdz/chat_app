@@ -7,7 +7,7 @@
 
 .chat-page-left__chats {
   box-sizing: border-box;
-  overflow: scroll;
+  overflow-y: scroll;
   padding-right: 20px;
   height: 100%;
   width: 100%;
@@ -31,4 +31,24 @@
   .chat-page-right {
     position: relative;
   }
+}
+
+.btn-color-violet {
+  box-shadow: 0 0 2px 0 var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-lg-secondary);
+}
+
+.btn-color-violet:hover {
+  background-color: var(--color-tertiary);
+}
+
+.btn-color-green {
+  box-shadow: 0 0 2px 0 var(--color-green-primary);
+  border-color: var(--color-green-primary);
+  background-color: var(--color-green-lg);
+}
+
+.btn-color-green:hover {
+  background-color: var(--color-green-secondary);
 }

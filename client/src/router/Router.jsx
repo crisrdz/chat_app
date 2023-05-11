@@ -16,6 +16,7 @@ import ProfilePage, { loader as profileLoader} from "../pages/user/profile/Profi
 import ViewProfile from "../pages/user/profile/ViewProfile";
 import EditProfilePage, { action as actionEditProfile } from "../pages/user/profile/EditProfilePage";
 import ChangeVisibilityPage, { action as actionVisibility } from "../pages/user/profile/ChangeVisibilityPage";
+import { action as friendAction} from "../components/modals/friends/ModalFriends";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "friends",
+        action: friendAction
+      }
     ],
   },
 ]);
