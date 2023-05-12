@@ -51,7 +51,39 @@ export const addFriend = async (req, res) => {
       });
     }
 
+    for(let i = 0; i < user.friendRequests.length; i++) {
+      if(user.friendRequests[i].toString() === friend._id.toString()) {
+        user.friendRequests.splice(i, 1);
+        break;
+      }
+    }
+
     user.friends.push(friend._id);
+    await user.save();
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: defaultError,
+    });
+  }
+};
+
+export const declineFriend = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const friend = await User.findOne({ username });
+    const user = await User.findById(req.userId);
+
+    for(let i = 0; i < user.friendRequests.length; i++) {
+      if(user.friendRequests[i].toString() === friend._id.toString()) {
+        user.friendRequests.splice(i, 1);
+        break;
+      }
+    }
+
     await user.save();
 
     return res.sendStatus(204);

@@ -6,15 +6,15 @@ import {
   useLoaderData,
   useOutlet,
 } from "react-router-dom";
-import Chat from "../../../components/Chat";
-import ChatBox from "../../../components/ChatBox";
 import { getChats } from "../../../api/chat";
-import "./ChatsPage.css";
-import Button from "../../../components/Button";
-import ModalNewChat from "../../../components/modals/newchats/ModalNewChat";
 import { createChat } from "../../../api/chat";
-import { socket } from "../../../socket";
+import { socket } from '../../../socket';
+import Chat from "../../../components/Chat";
 import ModalFriends from "../../../components/modals/friends/ModalFriends";
+import ModalNewChat from "../../../components/modals/newchats/ModalNewChat";
+import Button from "../../../components/Button";
+import ChatBox from "../../../components/ChatBox";
+import "./ChatsPage.css";
 
 export async function loader() {
   try {
@@ -72,12 +72,7 @@ function ChatsPage() {
   }, [action]);
 
   useEffect(() => {
-    socket.connect();
-
-    socket.on("connect", () => {
-      socket.emit("client:joinchats", chats);
-      socket.emit("client:joinuser", user.token);
-    });
+    socket.emit("client:joinchats", chats);
 
     socket.on("server:newmessage", replaceChats);
 
@@ -166,7 +161,7 @@ function ChatsPage() {
 
         <div className="chat-page-right">
           {outlet ? (
-            <Outlet context={{ socket, replaceChats }} />
+            <Outlet context={replaceChats} />
           ) : (
             <ChatBox key={"default"} />
           )}

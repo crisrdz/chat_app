@@ -1,7 +1,7 @@
 import { Link, useRouteLoaderData } from "react-router-dom";
 
 function ViewProfile() {
-  const user = useRouteLoaderData("profile");
+  const user = useRouteLoaderData("user");
   
   return (
     <>

@@ -13,7 +13,7 @@ export async function action () {
 }
 
 function ChangeVisibilityPage() {
-  const { isPublic } = useRouteLoaderData("profile");
+  const { isPublic } = useRouteLoaderData("user");
 
   return (
     <Form className="profile" action="" method="PUT">

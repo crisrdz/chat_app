@@ -1,30 +1,9 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
 import { AiFillCloseSquare } from "react-icons/ai";
-import { getFriends, addFriend, deleteFriend } from "../../../api/friends";
+import { getFriends } from "../../../api/friends";
 import TabAddFriends from "./TabAddFriends";
 import TabFriends from "./TabFriends";
 import "../Modal.css";
-
-export async function action ({ request }) {
-  try {
-    const { token } = JSON.parse(localStorage.getItem("user"));
-    if(request.method === "PUT") {
-      const formData = await request.formData();
-      await addFriend(token, formData.get("username"));
-    }
-
-    if(request.method === "DELETE") {
-      const formData = await request.formData();
-      await deleteFriend(token, formData.get("username"));
-    }
-
-    return redirect("/user/chats");
-  } catch (error) {
-    console.error(error);
-    return redirect("/user/chats");
-  }
-}
 
 function ModalFriends({ setShow }) {
   const [tabFriends, setTabFriends] = useState(true);

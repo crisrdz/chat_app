@@ -24,7 +24,7 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.userId, { email: 1, username: 1, isPublic: 1, _id: 0 });
+    const user = await User.findById(req.userId, { email: 1, username: 1, isPublic: 1, friendRequests: 1, _id: 0 }).populate({path: "friendRequests", select: "-_id username"});
 
     if (!user) {
       return res.status(404).json({

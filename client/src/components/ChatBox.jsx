@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoaderData, useOutletContext } from "react-router-dom";
+import { socket } from "../socket";
 import "./ChatBox.css";
 
 function ChatBox({ hasChat }) {
@@ -15,7 +16,7 @@ function ChatBox({ hasChat }) {
   }
 
   const { token, username } = JSON.parse(localStorage.getItem("user"));
-  const { socket, replaceChats } = useOutletContext();
+  const replaceChats = useOutletContext();
   const { chat } = useLoaderData();
 
   const [messagesState, setMessagesState] = useState(chat.messages);

@@ -19,7 +19,7 @@ const messageSchema = new Schema(
     seen: {
       type: Boolean,
       required: true,
-      defalut: false
+      default: false,
     }
   },
   {

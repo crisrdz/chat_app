@@ -4,7 +4,7 @@ import app from "./app.js";
 import sockets from "./sockets.js";
 import { PORT } from "./config.js";
 import "./db.js";
-import "./initialValue.js";
+import "./initialSetup.js";
 
 const server = createServer(app);
 

@@ -12,11 +12,10 @@ import LandingPage, { loader as landingLoader } from "../pages/LandingPage";
 import { action as loginAction } from "../components/modals/Login";
 import { action as registerAction } from "../components/modals/Register";
 import UserPage, { loader as userLoader } from "../pages/user/UserPage";
-import ProfilePage, { loader as profileLoader} from "../pages/user/profile/ProfilePage";
+import ProfilePage from "../pages/user/profile/ProfilePage";
 import ViewProfile from "../pages/user/profile/ViewProfile";
 import EditProfilePage, { action as actionEditProfile } from "../pages/user/profile/EditProfilePage";
 import ChangeVisibilityPage, { action as actionVisibility } from "../pages/user/profile/ChangeVisibilityPage";
-import { action as friendAction} from "../components/modals/friends/ModalFriends";
 
 const router = createBrowserRouter([
   {
@@ -38,12 +37,11 @@ const router = createBrowserRouter([
     path: "user",
     element: <UserPage />,
     loader: userLoader,
+    id: "user",
     children: [
       {
         path: "profile",
         element: <ProfilePage />,
-        loader: profileLoader,
-        id: "profile",
         children: [
           {
             index: true,
@@ -75,10 +73,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "friends",
-        action: friendAction
-      }
     ],
   },
 ]);

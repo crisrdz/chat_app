@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", [verifyToken], friendController.getFriends);
 router.put("/add", [verifyToken], friendController.addFriend);
+router.put("/decline", [verifyToken], friendController.declineFriend);
 router.put("/delete", [verifyToken], friendController.deleteFriend);
 
 export default router;

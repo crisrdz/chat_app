@@ -1,16 +1,38 @@
 .navbar-user {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: 0.5rem;
+  margin: 0 0.6rem;
 }
 
 .navbar-user__user-menu {
+  position: relative;
   border: 2px solid var(--color-white);
   border-radius: 50%;
   display: flex;
   font-size: 1.7rem;
-  margin-right: 0.8rem;
   cursor: pointer;
+}
+
+.navbar-user__user-menu__icon-group {
+  position: relative;
+}
+
+.navbar-user__user-menu__icon-group {
+  position: relative;
+  display: flex;
+}
+
+.navbar-user__user-menu__icon-group__circle {
+  z-index: 10;
+  position: absolute;
+  right: 11%;
+  top: 12%;
+  background-color: red;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 0.6rem;
+  height: 0.6rem;
 }
 
 .navbar-user__user-menu__menu {
@@ -20,15 +42,16 @@
 
   flex-direction: column;
   position: absolute;
-  top: 110%;
-  right: 0.5rem;
-  
+  top: var(--header-height);
+  right: 0;
+
   background-color: var(--color-lg-primary);
   border: var(--color-secondary) 2px solid;
   border-radius: 1rem;
   padding: 0.8rem;
 
-  transform: translateY(-110%);
+  width: max-content;
+  transform: translateY(-10rem);
   transition: all 0.2s ease;
   z-index: -1;
   font-size: 1rem;
@@ -39,9 +62,34 @@
 }
 
 .navbar-user__user-menu__menu__item {
+  margin: 0;
   text-decoration: none;
   color: var(--color-primary);
   transition: all 0.3s ease;
+}
+
+.navbar-user__user-menu__menu__item-requests {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  margin: 0.1rem 0;
+}
+
+.navbar-user__user-menu__menu__item-buttons {
+  color: green;
+  font-size: 1.5rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.navbar-user__user-menu__menu__item-buttons_confirm {
+  color: green;
+}
+
+.navbar-user__user-menu__menu__item-buttons_decline {
+  color: red;
 }
 
 .navbar-user__user-menu__menu__item:hover {

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineRight, AiOutlineLoading, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { getUserByUsername } from "../../../api/user";
-import { addFriend } from "../../../api/friends";
+import { socket } from "../../../socket";
 import "../Tabs.css";
 
 const STATUS = {
@@ -11,10 +11,17 @@ const STATUS = {
   ERROR: "ERROR"
 }
 
-function TabAddFriends({ className, searchFriends }) {
+function TabAddFriends({ className }) {
   const [searchValue, setSearchValue] = useState("");
   const [error, setError] = useState();
   const [status, setStatus] = useState(STATUS.NORMAL);
+  const [requestError, setRequestError] = useState();
+
+  useEffect(() => {
+    socket.on("server:newfriendrequest_error", error => {
+      setRequestError(error);
+    })
+  }, []);
 
   async function searchUser(e) {
     try {
@@ -34,10 +41,7 @@ function TabAddFriends({ className, searchFriends }) {
 
   async function handleAddFriend() {
     try {
-      const { token } = JSON.parse(localStorage.getItem("user"));
-      await addFriend(token, searchValue);
-
-      await searchFriends();
+      socket.emit("client:newfriendrequest", searchValue);
 
       setSearchValue("");
       setError("");
@@ -61,6 +65,7 @@ function TabAddFriends({ className, searchFriends }) {
               name="searchbar"
               value={searchValue} onChange={(e) => {
                 setError("")
+                setRequestError("");
                 setStatus(STATUS.NORMAL);
                 setSearchValue(e.target.value);
               }}
@@ -94,9 +99,12 @@ function TabAddFriends({ className, searchFriends }) {
       </form>
         {status === STATUS.SUCCESS && (
           <button className="modal__btn-submit" onClick={handleAddFriend}>
-            Agregar amigo
+            Enviar solicitud de amistad
           </button>
         )}
+        {
+          requestError && <small htmlFor="searchbar" className="modal__input-text--error">{requestError}</small>
+        }
     </div>
   );
 }

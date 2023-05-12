@@ -6,10 +6,12 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -32,11 +34,16 @@ const userSchema = new Schema(
         {
           ref: "User",
           type: Schema.Types.ObjectId,
-          unique: true,
         },
       ],
       validate: [friendsLimit, "{PATH} exceeds the limit of 50"],
     },
+    friendRequests: [
+      {
+        ref: "User",
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
   {
     timestamps: true,

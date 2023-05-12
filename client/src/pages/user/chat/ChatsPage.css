@@ -26,8 +26,8 @@
     grid-template-columns: 30% 70%;
 
     height: calc(100vh - var(--header-height))
-  }   
-  
+  }
+
   .chat-page-right {
     position: relative;
   }

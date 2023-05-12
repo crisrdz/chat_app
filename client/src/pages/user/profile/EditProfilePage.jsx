@@ -20,7 +20,7 @@ export async function action({ request }) {
 }
 
 function EditProfilePage() {
-  const user = useRouteLoaderData("profile");
+  const user = useRouteLoaderData("user");
 
   return (
     <Form className="profile" action="" method="PUT">

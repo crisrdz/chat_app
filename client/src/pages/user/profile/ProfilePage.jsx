@@ -1,19 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "./ProfilePage.css";
-import { getUser } from "../../../api/user";
 import Footer from "../../../components/structure/Footer";
-
-export async function loader () {
-  try {
-    const { token } = JSON.parse(localStorage.getItem("user"));
-    const data = await getUser(token);
-
-    return data.user;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
 
 function ProfilePage() {  
   return (
