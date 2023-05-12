@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineRight, AiOutlineLoading, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { getUserByUsername } from "../../../api/user";
 import { addFriend } from "../../../api/friends";
-import "./Tabs.css";
+import "../Tabs.css";
 
 const STATUS = {
   NORMAL: "NORMAL",
@@ -39,7 +39,6 @@ function TabAddFriends({ className, searchFriends }) {
 
       await searchFriends();
 
-      setUserExists(false);
       setSearchValue("");
       setError("");
       setStatus(STATUS.NORMAL);

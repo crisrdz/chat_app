@@ -164,3 +164,24 @@ export async function getUserByUsername(req, res) {
     });
   }
 }
+
+export const getPublicUsers = async (req, res) => {
+  try {
+    const page = isNaN(req.query.page) ? 1 : req.query.page;
+
+    const limit = 10;
+    const skip = limit * (page - 1);
+
+    const users = await User.find({isPublic: true}, { password: 0 }, { limit, skip });
+
+    return res.json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: defaultError,
+    });
+  }
+};

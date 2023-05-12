@@ -40,7 +40,7 @@ export async function getChat(token, chatId) {
   }
 }
 
-export async function createChat(token, friendId) {
+export async function createChat(token, username) {
   try {
     const data = await fetch ("/api/chat/", {
       method: "POST",
@@ -48,7 +48,7 @@ export async function createChat(token, friendId) {
         "X-Access-Token": token,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({friendId})
+      body: JSON.stringify({username})
     });
   
     if(!data.ok) {

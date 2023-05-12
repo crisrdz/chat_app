@@ -1,4 +1,5 @@
 import Chat from "../models/Chat.js";
+import User from "../models/User.js";
 import { defaultError } from "../constants.js";
 
 export const getChats = async (req, res) => {
@@ -73,10 +74,20 @@ export const getChat = async (req, res) => {
 
 export const createChat = async (req, res) => {
   try {
-    const { friendId } = req.body;
+    const { username } = req.body;
+    const mate = await User.findOne({ username })
+
+    const chats = await Chat.findOne({users: {$all: [req.userId, mate._id]}});
+
+    if(chats) {
+      return res.status(400).json({
+        success: false,
+        messagge: "Ya tienes un chat con este usuario",
+      });
+    }
 
     const chat = await Chat.create({
-      users: [req.userId, friendId],
+      users: [req.userId, mate._id],
     });
 
     await Chat.populate(chat, { path: "users", select: "username -_id" });
@@ -88,13 +99,14 @@ export const createChat = async (req, res) => {
     };
 
     const io = req.app.get("io");
-    io.to(`user:${friendId}`).emit("server:newchat", chatCleaned);
+    io.to(`user:${mate._id}`).emit("server:newchat", chatCleaned);
 
     return res.json({
       success: true,
       chat: chatCleaned,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: defaultError,
@@ -115,9 +127,11 @@ export const deleteChat = async (req, res) => {
     }
 
     const io = req.app.get("io");
-    const friendId = chat.users.find(user => user.toString() !== req.userId)?.toString();
+    const friendId = chat.users
+      .find((user) => user.toString() !== req.userId)
+      ?.toString();
 
-    if(friendId) {
+    if (friendId) {
       io.to(`user:${friendId}`).emit("server:deletechat", chatId);
     }
 

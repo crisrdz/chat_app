@@ -100,3 +100,24 @@ export async function getUserByUsername(token, username) {
     return Promise.reject(error);
   }
 }
+
+export async function getPublicUsers(token, page) {
+  try {
+    const data = await fetch(`/api/user/publics?page=${page}`, {
+      method: "GET",
+      headers: {
+        "X-Access-Token": token,
+      },
+    });
+
+    if (!data.ok) {
+      throw data;
+    }
+
+    const dataJSON = await data.json();
+
+    return dataJSON;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}

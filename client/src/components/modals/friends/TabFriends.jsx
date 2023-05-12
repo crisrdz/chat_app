@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { deleteFriend } from "../../../api/friends";
-import "./Tabs.css";
+import "../Tabs.css";
 
 function TabFriends({ className, friends, searchFriends }) {
   useEffect(() => {
