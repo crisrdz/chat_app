@@ -7,6 +7,16 @@ function Chat({chat}) {
   const { username } = JSON.parse(localStorage.getItem("user"));
   const [showMenu, setShowMenu] = useState(false)
   const { id } = useParams();
+  let dateLastMessage;
+  if(chat.messages.length > 0) {
+    dateLastMessage = new Date(chat.messages[0].createdAt);
+    
+    if(dateLastMessage.toLocaleDateString() === new Date().toLocaleDateString()) {
+      dateLastMessage = dateLastMessage.toLocaleTimeString(undefined, {timeStyle: "short"})
+    } else {
+      dateLastMessage = dateLastMessage.toLocaleDateString()
+    }
+  }
   
   const navigate = useNavigate();
 
@@ -27,20 +37,21 @@ function Chat({chat}) {
 
   return (
     <div className={`chat ${id && "chat--hidden"}`} onClick={handleClick}>
-      <div className='chat__left'>
+      <div className='chat__section chat__left'>
         <div className="chat__left__user-image">
           { friendUsername[0] }
         </div>
       </div>
-      <div className='chat__center'>
+      <div className='chat__section chat__center'>
         <h6 className='chat__center__item chat__center__username'>
           { friendUsername }
         </h6>
-        <p className='chat__center__item chat__center__last-message'>
-          { chat.messages.length > 0 ? chat.messages[0].body : "" }
-        </p>
+        <div className='chat__center__msg-container'>
+          <p className={`chat__center__item chat__center__msg-container__last-msg ${chat.messages[0].user.username !== username && "chat__center__msg-container__last-msg--yours"}`}>{ chat.messages.length > 0 ? chat.messages[0].body : "" }</p>
+          <small className='chat__center__msg-container__date'>{ dateLastMessage }</small>
+        </div>
       </div>
-      <div className='chat__right'>
+      <div className='chat__section chat__right'>
         <button className='chat__right__btn-menu' onClick={handleOpenMenu}>
           <AiOutlineMenu />
         </button>

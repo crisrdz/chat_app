@@ -52,6 +52,13 @@
   font-size: 1.2rem;
 }
 
+.chat-box__messages__date {
+  margin: 1rem auto;
+  border: 2px solid var(--color-primary);
+  border-radius: 1rem;
+  padding: 0.1rem 0.3rem;
+}
+
 .chat-box__messages__msg {
   border: 1px solid var(--color-primary);
   border-radius: 8px;
@@ -59,6 +66,9 @@
   padding: 5px;
 
   width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
 .chat-box__messages__msg--mine {
@@ -67,6 +77,19 @@
 
 .chat-box__messages__msg--yours {
   background-color: var(--color-lg-secondary);
+}
+
+.chat-box__messages__msg__body {
+  margin: 0;
+}
+
+.chat-box__messages__msg__date {
+  color: gray;
+  font-size: 0.7rem;
+}
+
+.chat-box__messages__msg__date--mine {
+  align-self: end;
 }
 
 .chat-box__input-box {

@@ -7,7 +7,18 @@ export async function loader({ params }) {
   const { token } = JSON.parse(localStorage.getItem("user"));
 
   const data = await getChat(token, params.id);
+  const messages = {};
+  data.chat.messages.forEach(message => {
+    message.createdAt = new Date(message.createdAt);
+    const date = message.createdAt.toLocaleDateString();
+    
+    if(!messages.hasOwnProperty(date)) {
+      messages[date] = [];
+    }
+    messages[date].unshift(message);
+  });
 
+  data.chat.messages = messages;
   return data;
 }
 

@@ -100,37 +100,40 @@ function UserPage() {
         <div className="navbar-user">
           <div className="navbar-user__welcome">¡Hola, {user.username}!</div>
           
-          <div className="navbar-user__user-menu" onClick={handleToggleRequests}>
-            <div className="navbar-user__user-menu__icon-group">
-              <AiOutlineBell className="navbar-user__user-menu__icon-group__icon" />
-              {requestUsernames.length > 0 && <div className="navbar-user__user-menu__icon-group__circle"></div>}
-            </div>
-            
-            <div className="navbar-user__user-menu__menu" ref={refRequests}>
-              {requestUsernames.length === 0 ? (
-                <p className="navbar-user__user-menu__menu__item">
-                  ¡No tienes solicitudes de amistad!
-                </p>
-              ) : (
-                <>
-                  <h4 className="navbar-user__user-menu__menu__item">Solicitudes de amistad:</h4>
-                  <div>
-                    {requestUsernames.map((request) => 
-                      <div className="navbar-user__user-menu__menu__item-requests" key={request.username}>
-                        <p className="navbar-user__user-menu__menu__item">
-                          {request.username}
-                        </p>
-                        <div className="navbar-user__user-menu__menu__item-buttons">
-                          <AiOutlineCheckCircle className="navbar-user__user-menu__menu__item-buttons_confirm" onClick={() => acceptRequest(request.username)} />
-                          <AiOutlineCloseCircle className="navbar-user__user-menu__menu__item-buttons_decline" onClick={() => declineRequest(request.username)} />
+          <div className="navbar-user__menus">
+            <div className="navbar-user__user-menu" onClick={handleToggleRequests}>
+              <div className="navbar-user__user-menu__icon-group">
+                <AiOutlineBell className="navbar-user__user-menu__icon-group__icon" />
+                {requestUsernames.length > 0 && <div className="navbar-user__user-menu__icon-group__circle"></div>}
+              </div>
+              
+              <div className="navbar-user__user-menu__menu" ref={refRequests}>
+                {requestUsernames.length === 0 ? (
+                  <p className="navbar-user__user-menu__menu__item">
+                    ¡No tienes solicitudes de amistad!
+                  </p>
+                ) : (
+                  <>
+                    <h4 className="navbar-user__user-menu__menu__item">Solicitudes de amistad:</h4>
+                    <div>
+                      {requestUsernames.map((request) => 
+                        <div className="navbar-user__user-menu__menu__item-requests" key={request.username}>
+                          <p className="navbar-user__user-menu__menu__item">
+                            {request.username}
+                          </p>
+                          <div className="navbar-user__user-menu__menu__item-buttons">
+                            <AiOutlineCheckCircle className="navbar-user__user-menu__menu__item-buttons_confirm" onClick={() => acceptRequest(request.username)} />
+                            <AiOutlineCloseCircle className="navbar-user__user-menu__menu__item-buttons_decline" onClick={() => declineRequest(request.username)} />
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
+          
           <div className="navbar-user__user-menu" onClick={handleToggleMenu}>
             <AiOutlineUser  />
             <div className="navbar-user__user-menu__menu" ref={refMenu}>

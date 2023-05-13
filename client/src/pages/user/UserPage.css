@@ -5,6 +5,13 @@
   margin: 0 0.6rem;
 }
 
+.navbar-user__welcome {
+  max-width: 40vw;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .navbar-user__user-menu {
   position: relative;
   border: 2px solid var(--color-white);

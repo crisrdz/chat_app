@@ -114,6 +114,8 @@ function ChatsPage() {
     chat.messages = [
       {
         body: message.body,
+        createdAt: message.createdAt,
+        user: message.user
       },
     ];
 

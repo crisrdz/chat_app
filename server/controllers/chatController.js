@@ -24,10 +24,14 @@ export const getChats = async (req, res) => {
       .populate({ path: "users", select: "-_id username" })
       .populate({
         path: "messages",
-        select: "-_id body user",
+        select: "-_id body user createdAt",
         options: {
           sort: "-createdAt",
           limit: 1,
+        },
+        populate: {
+          path: "user",
+          select: "-_id username",
         },
       })
       .lean();
@@ -51,7 +55,7 @@ export const getChat = async (req, res) => {
       .populate({ path: "users", select: "username -_id" })
       .populate({
         path: "messages",
-        select: "-_id body user",
+        select: "-_id body user createdAt",
         options: { sort: "-createdAt" },
         populate: {
           path: "user",
