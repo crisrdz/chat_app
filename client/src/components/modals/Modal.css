@@ -1,6 +1,7 @@
 .modal {
   position: fixed;
   z-index: 5;
+  max-width: 18rem;
 
   left: 50%;
   top: 50%;
@@ -122,6 +123,10 @@
 
 .modal__btn-submit:hover {
   background-color: var(--color-lg-secondary);
+}
+
+.modal__error {
+  color: red;
 }
 
 .tab {

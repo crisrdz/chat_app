@@ -1,5 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
 
+// Home pages
+import LandingPage from "../pages/home/LandingPage";
+import { action as loginAction } from "../components/modals/Login";
+import { action as registerAction } from "../components/modals/Register";
+
+// User pages
+import UserPage, { loader as userLoader } from "../pages/user/UserPage";
+
+import ProfilePage from "../pages/user/profile/ProfilePage";
+import ViewProfile from "../pages/user/profile/ViewProfile";
+import EditProfilePage, { action as actionEditProfile } from "../pages/user/profile/EditProfilePage";
+import ChangeVisibilityPage, { action as actionVisibility } from "../pages/user/profile/ChangeVisibilityPage";
+
 import ChatsPage, {
   loader as chatsLoader,
   action as chatsAction,
@@ -8,27 +21,24 @@ import ChatPage, {
   loader as chatLoader,
   action as chatAction,
 } from "../pages/user/chat/ChatPage";
-import LandingPage, { loader as landingLoader } from "../pages/LandingPage";
-import { action as loginAction } from "../components/modals/Login";
-import { action as registerAction } from "../components/modals/Register";
-import UserPage, { loader as userLoader } from "../pages/user/UserPage";
-import ProfilePage from "../pages/user/profile/ProfilePage";
-import ViewProfile from "../pages/user/profile/ViewProfile";
-import EditProfilePage, { action as actionEditProfile } from "../pages/user/profile/EditProfilePage";
-import ChangeVisibilityPage, { action as actionVisibility } from "../pages/user/profile/ChangeVisibilityPage";
+
+// Error page
+import ErrorPage from "../pages/error/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
-    loader: landingLoader,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "login",
+        element: <LandingPage />,
         action: loginAction,
       },
       {
         path: "register",
+        element: <LandingPage />,
         action: registerAction,
       },
     ],
@@ -36,6 +46,7 @@ const router = createBrowserRouter([
   {
     path: "user",
     element: <UserPage />,
+    errorElement: <ErrorPage />,
     loader: userLoader,
     id: "user",
     children: [

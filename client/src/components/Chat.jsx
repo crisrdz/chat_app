@@ -14,7 +14,7 @@ function Chat({chat}) {
     if(dateLastMessage.toLocaleDateString() === new Date().toLocaleDateString()) {
       dateLastMessage = dateLastMessage.toLocaleTimeString(undefined, {timeStyle: "short"})
     } else {
-      dateLastMessage = dateLastMessage.toLocaleDateString()
+      dateLastMessage = dateLastMessage.toLocaleDateString(undefined, {dateStyle: "short"})
     }
   }
   

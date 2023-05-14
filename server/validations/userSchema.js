@@ -1,17 +1,42 @@
 import Joi from "joi";
 
+const errorMessages = {
+  email: {
+    "string.empty": "Correo electrónico es requerido",
+    "string.email": "Ingrese un correo electrónico válido"
+  },
+  username: {
+    "string.empty": "Nombre de usuario es requerido",
+    "string.min": "Nombre de usuario debe tener entre 3 y 16 caracteres",
+    "string.max": "Nombre de usuario debe tener entre 3 y 16 caracteres",
+    "string.alphanum": "Nombre de usuario debe contener sólo números y letras",
+  },
+  passwordOne: {
+    "string.empty": "Contraseña es requerida",
+  },
+  passwordTwo: {
+    "any.only": "Las contraseñas no coinciden"
+  },
+  passwordOneUpdate: {
+    "string.empty": "Nueva contraseña es requerida",
+  },
+  passwordOldUpdate: {
+    "string.empty": "Contraseña anterior es requerida",
+  }
+}
+
 export const userCreateSchema = Joi.object({
-  email: Joi.string().email().required(),
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  passwordOne: Joi.string().required(),
-  passwordTwo: Joi.string().required().valid(Joi.ref("passwordOne")),
+  email: Joi.string().email().required().messages(errorMessages.email),
+  username: Joi.string().alphanum().min(3).max(16).required().messages(errorMessages.username),
+  passwordOne: Joi.string().required().messages(errorMessages.passwordOne),
+  passwordTwo: Joi.string().required().valid(Joi.ref("passwordOne")).messages(errorMessages.passwordTwo),
 });
 
 export const userUpdateSchema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  passwordOne: Joi.string().required(),
-  passwordTwo: Joi.string().required().valid(Joi.ref("passwordOne")),
-  passwordOld: Joi.string().required()
+  username: Joi.string().alphanum().min(3).max(16).required().messages(errorMessages.username),
+  passwordOne: Joi.string().required().messages(errorMessages.passwordOneUpdate),
+  passwordTwo: Joi.string().required().valid(Joi.ref("passwordOne")).messages(errorMessages.passwordTwo),
+  passwordOld: Joi.string().required().messages(errorMessages.passwordOldUpdate)
 });
 
 export default {

@@ -1,27 +1,37 @@
 import User from "../models/User.js";
 
 export async function newFriendRequest(username, userId) {
-  const user = await User.findOne({ username });
+  const friend = await User.findOne({ username });
 
-  if (user.friends.some((friendId) => friendId.toString() === userId.toString())) {
+  if (friend.friends.length > 50) {
     return {
       success: false,
-      message: "Este usuario ya es tu amigo"
+      message: "Límite de amigos alcanzado",
     }
   }
 
-  if (user.friendRequests.some((friendId) => friendId.toString() === userId.toString())) {
+  if (friend.friends.some((friendId) => friendId.toString() === userId.toString())) {
     return {
       success: false,
-      message: "Ya enviaste una solicitud a este usuario"
-    }
+      message: "Este usuario ya es tu amigo",
+    };
   }
 
-  user.friendRequests.push(userId);
-  await user.save();
+  if (friend.friendRequests.some((friendId) => friendId.toString() === userId.toString())) {
+    return {
+      success: false,
+      message: "Ya enviaste una solicitud a este usuario",
+    };
+  }
+
+  friend.friendRequests.push(userId);
+  await friend.save();
+
+  const user = await User.findById(userId).lean();
 
   return {
     success: true,
-    user
+    user: friend,
+    username: user.username
   };
 }

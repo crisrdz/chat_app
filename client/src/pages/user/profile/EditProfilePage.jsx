@@ -1,4 +1,4 @@
-import { Form, redirect, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
 import { updateUser } from "../../../api/user";
 
 export async function action({ request }) {
@@ -13,14 +13,18 @@ export async function action({ request }) {
 
     return redirect("/user/profile");
   } catch (error) {
-    const data = await error.json();
-    console.error(data);
-    return null;
+    if(error.status === 400) {
+      const data = await error.json();
+      console.error(data);
+      return data.message;
+    }
+    throw error;
   }
 }
 
 function EditProfilePage() {
   const user = useRouteLoaderData("user");
+  const error = useActionData();
 
   return (
     <Form className="profile" action="" method="PUT">
@@ -38,6 +42,11 @@ function EditProfilePage() {
           disabled
           name="email"
         />
+        {error?.details?.find(error => error.path.includes("email")) && (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("email")).message}
+          </small>
+        )}
       </div>
 
       <div className="profile__box">
@@ -50,6 +59,11 @@ function EditProfilePage() {
           defaultValue={user.username}
           name="username"
         />
+        {error?.details?.find(error => error.path.includes("username")) && (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("username")).message}
+          </small>
+        )}
       </div>
 
       <div className="profile__box">
@@ -61,6 +75,11 @@ function EditProfilePage() {
           className="profile__box__field"
           name="passwordOne"
         />
+        {error?.details?.find(error => error.path.includes("passwordOne")) && (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("passwordOne")).message}
+          </small>
+        )}
       </div>
 
       <div className="profile__box">
@@ -72,6 +91,11 @@ function EditProfilePage() {
           className="profile__box__field"
           name="passwordTwo"
         />
+        {error?.details?.find(error => error.path.includes("passwordTwo")) && (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("passwordTwo")).message}
+          </small>
+        )}
       </div>
 
       <div className="profile__box">
@@ -83,7 +107,18 @@ function EditProfilePage() {
           className="profile__box__field"
           name="passwordOld"
         />
+        {error?.details?.find(error => error.path.includes("passwordOld")) && (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("passwordOld")).message}
+          </small>
+        )}
       </div>
+
+      {typeof error === "string" && (
+        <small className="modal__error">
+          {error}
+        </small>
+      )}
 
       <button type="submit" className="profile__btn">
         Editar perfil

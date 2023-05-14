@@ -26,9 +26,9 @@ export async function loader() {
       user,
     };
   } catch (error) {
-    if (error.status == 401) {
+    if (error.status === 401) {
       localStorage.removeItem("user");
-      return redirect("/");
+      throw new Error("Su sesión ha expirado");
     }
 
     throw new Error("Error al obtener los chats");

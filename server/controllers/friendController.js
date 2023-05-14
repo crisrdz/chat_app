@@ -6,7 +6,7 @@ export const getFriends = async (req, res) => {
     const user = await User.findById(req.userId, { friends: 1 }).populate({
       path: "friends",
       select: "-_id username",
-    });
+    }).lean();
 
     return res.json({
       success: true,
@@ -59,7 +59,10 @@ export const addFriend = async (req, res) => {
     }
 
     user.friends.push(friend._id);
+    friend.friends.push(user._id);
+
     await user.save();
+    await friend.save();
 
     return res.sendStatus(204);
   } catch (error) {
@@ -74,10 +77,11 @@ export const declineFriend = async (req, res) => {
   try {
     const { username } = req.body;
 
-    const friend = await User.findOne({ username });
+    const friend = await User.findOne({ username }).lean();
     const user = await User.findById(req.userId);
 
     for(let i = 0; i < user.friendRequests.length; i++) {
+      console.log(user.friendRequests[i] + " - " + friend._id.toString());
       if(user.friendRequests[i].toString() === friend._id.toString()) {
         user.friendRequests.splice(i, 1);
         break;

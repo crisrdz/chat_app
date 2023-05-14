@@ -8,7 +8,7 @@ export const getUsers = async (req, res) => {
     const limit = 10;
     const skip = limit * (page - 1);
 
-    const users = await User.find({}, { password: 0 }, { limit, skip });
+    const users = await User.find({}, { password: 0 }, { limit, skip }).lean();
 
     return res.json({
       success: true,
@@ -24,7 +24,7 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.userId, { email: 1, username: 1, isPublic: 1, friendRequests: 1, _id: 0 }).populate({path: "friendRequests", select: "-_id username"});
+    const user = await User.findById(req.userId, { email: 1, username: 1, isPublic: 1, friendRequests: 1, _id: 0 }).populate({path: "friendRequests", select: "-_id username"}).lean();
 
     if (!user) {
       return res.status(404).json({
@@ -91,7 +91,7 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.userId);
+    const user = await User.findByIdAndDelete(req.userId).lean();
 
     if (!user) {
       return res.status(404).json({
@@ -146,7 +146,7 @@ export async function getUserByUsername(req, res) {
   try {
     const username = req.params.username;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).lean();
 
     if (!user) {
       return res.status(404).json({
@@ -172,7 +172,7 @@ export const getPublicUsers = async (req, res) => {
     const limit = 10;
     const skip = limit * (page - 1);
 
-    const users = await User.find({isPublic: true}, { password: 0 }, { limit, skip });
+    const users = await User.find({isPublic: true}, { password: 0 }, { limit, skip }).lean();
 
     return res.json({
       success: true,

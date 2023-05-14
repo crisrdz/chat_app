@@ -110,7 +110,6 @@ export const createChat = async (req, res) => {
       chat: chatCleaned,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       success: false,
       message: defaultError,
@@ -126,7 +125,7 @@ export const deleteChat = async (req, res) => {
     if (!chat) {
       return res.status(404).json({
         success: false,
-        message: "Not found",
+        message: "Chat no encontrado",
       });
     }
 

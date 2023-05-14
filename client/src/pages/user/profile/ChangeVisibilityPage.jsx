@@ -7,8 +7,7 @@ export async function action () {
     const data = await changeVisibility(token);
     return data.user;
   } catch (error) {
-    console.error(error);
-    return null;
+    throw error;
   }
 }
 

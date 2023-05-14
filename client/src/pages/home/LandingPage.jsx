@@ -1,26 +1,15 @@
 import { useState } from "react";
-import Header from "../components/structure/Header";
-import Footer from "../components/structure/Footer";
-import NavbarMenu from "../components/structure/NavbarMenu";
-import Login from "../components/modals/Login";
+import Header from "../../components/structure/Header";
+import Footer from "../../components/structure/Footer";
+import NavbarMenu from "../../components/structure/NavbarMenu";
+import Register from "../../components/modals/Register";
+import Login from "../../components/modals/Login";
 import "./LandingPage.css";
-import { useLoaderData } from "react-router-dom";
-import Register from "../components/modals/Register";
-
-export function loader() {
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if(user){
-    return user.token;
-  } else {
-    return null;
-  }
-}
 
 function LandingPage() {
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const isLogged = useLoaderData();
+  const isLogged = JSON.parse(localStorage.getItem("user"));
 
   return (
     <>

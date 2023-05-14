@@ -1,4 +1,4 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
+import { Link, Outlet, redirect, useLoaderData } from "react-router-dom";
 import { AiOutlineBell, AiOutlineUser, AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import Header from "../../components/structure/Header";
 import "./UserPage.css";
@@ -9,16 +9,20 @@ import { addFriend, declineFriend } from "../../api/friends";
 
 export async function loader () {
   try {
-    const { token } = JSON.parse(localStorage.getItem("user"));
-    const data = await getUser(token);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const data = await getUser(user.token);
 
     return {
       ...data.user,
-      token
+      token: user.token
     };
   } catch (error) {
-    console.error(error);
-    return null;
+    localStorage.removeItem("user");
+    if (error.status === 401) {
+      throw new Error("Su sesión ha expirado.");
+    }
+
+    throw new Error("Error al entrar a su cuenta. Vuelva a iniciar sesión e inténtelo más tarde.");
   }
 }
 

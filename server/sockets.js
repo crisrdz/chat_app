@@ -40,7 +40,7 @@ const sockets = (io) => {
           throw result
         }
 
-        io.to(`user:${result.user._id.toString()}`).emit("server:newfriendrequest", username);
+        io.to(`user:${result.user._id.toString()}`).emit("server:newfriendrequest", result.username);
       } catch (error) {
         if(error?.success === false) {
           socket.emit("server:newfriendrequest_error", error.message);
