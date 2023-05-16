@@ -1,6 +1,7 @@
 import Chat from "../models/Chat.js";
 import User from "../models/User.js";
 import { defaultError } from "../constants.js";
+import { isValidObjectId } from 'mongoose'
 
 export const getChats = async (req, res) => {
   try {
@@ -51,6 +52,14 @@ export const getChats = async (req, res) => {
 export const getChat = async (req, res) => {
   try {
     const chatId = req.params.id;
+
+    if(!isValidObjectId(chatId)){
+      return res.status(400).json({
+        success: false,
+        message: "Chat no válido",
+      });
+    }
+
     const chat = await Chat.findById(chatId, { id: 1, users: 1, messages: 1 })
       .populate({ path: "users", select: "username -_id" })
       .populate({
@@ -63,6 +72,13 @@ export const getChat = async (req, res) => {
         },
       })
       .lean();
+
+    if (!chat) {
+      return res.status(404).json({
+        success: false,
+        message: "Chat no encontrado",
+      });
+    }
 
     return res.json({
       success: true,

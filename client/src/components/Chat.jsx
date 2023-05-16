@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Form, useNavigate, useParams } from 'react-router-dom'
+import { Form, useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { AiOutlineMenu } from 'react-icons/ai'
 import './Chat.css';
 
 function Chat({chat}) {
   const { username } = JSON.parse(localStorage.getItem("user"));
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
   const { id } = useParams();
+
   let dateLastMessage;
   if(chat.messages.length > 0) {
     dateLastMessage = new Date(chat.messages[0].createdAt);
@@ -47,7 +48,7 @@ function Chat({chat}) {
           { friendUsername }
         </h6>
         <div className='chat__center__msg-container'>
-          <p className={`chat__center__item chat__center__msg-container__last-msg ${chat.messages[0].user.username !== username && "chat__center__msg-container__last-msg--yours"}`}>{ chat.messages.length > 0 ? chat.messages[0].body : "" }</p>
+          <p className={`chat__center__item chat__center__msg-container__last-msg ${chat.messages[0]?.user.username !== username && "chat__center__msg-container__last-msg--yours"}`}>{ chat.messages.length > 0 ? chat.messages[0].body : "" }</p>
           <small className='chat__center__msg-container__date'>{ dateLastMessage }</small>
         </div>
       </div>

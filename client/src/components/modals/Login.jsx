@@ -15,7 +15,7 @@ export async function action({ request }) {
 
     return redirect("/user/chats");
   } catch (error) {
-    if (error.status === 401) {
+    if (error.status === 401 || error.status === 400) {
       return await error.json();
     }
     return "Error al iniciar sesión. Inténtelo más tarde.";

@@ -1,3 +1,8 @@
+.page {
+  overflow: hidden;
+  position: relative;
+}
+
 .navbar-user {
   display: flex;
   align-items: center;

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import {
   Outlet,
-  redirect,
   useActionData,
   useLoaderData,
   useOutlet,
 } from "react-router-dom";
+import { useModalMessage } from "../../../hooks/modalHooks";
 import { getChats } from "../../../api/chat";
 import { createChat } from "../../../api/chat";
 import { socket } from '../../../socket';
@@ -14,6 +14,7 @@ import ModalFriends from "../../../components/modals/friends/ModalFriends";
 import ModalNewChat from "../../../components/modals/newchats/ModalNewChat";
 import Button from "../../../components/Button";
 import ChatBox from "../../../components/ChatBox";
+import ModalMessage from "../../../components/modals/message/ModalMessage";
 import "./ChatsPage.css";
 
 export async function loader() {
@@ -49,7 +50,12 @@ export async function action({ request }) {
 
     return null;
   } catch (error) {
-    return null;
+    if (error.status === 401) {
+      localStorage.removeItem("user");
+      throw new Error("Su sesión ha expirado");
+    }
+
+    throw new Error("Eror al crear chat");
   }
 }
 
@@ -62,42 +68,48 @@ function ChatsPage() {
   const [showNewChat, setShowNewChat] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
 
+  const { modalMessage, showModalMessage } = useModalMessage();
+
   useEffect(() => {
-    setChats(data.chats);
+    setChats(prev => {
+      if(prev.length > data.chats.length) {
+        showModalMessage("¡El chat ha sido eliminado con éxito!", true);
+      }
+      return data.chats
+    });
   }, [data]);
 
   useEffect(() => {
     setShowNewChat(false);
     setChats(data.chats);
+
+    if(action?.chat) {
+      showModalMessage(`¡Un nuevo chat con ${action.chat.users[0].username === action.chat.username ? action.chat.users[0].username : action.chat.users[1].username} ha sido creado!`);
+    }
   }, [action]);
-
-  useEffect(() => {
-    socket.emit("client:joinchats", chats);
-
-    socket.on("server:newmessage", replaceChats);
-
-    return () => {
-      socket.off("server:newmessage", replaceChats);
-    };
-  }, []);
 
   useEffect(() => {
     const newChat = (chat) => {
       setChats([chat, ...chats]);
+      showModalMessage(`¡Un nuevo chat con ${chat.users[0].username !== user.username ? chat.users[0].username : chat.users[1].username} ha sido creado!`);
     };
 
     const deleteChat = (chatId) => {
       const chatsCopy = [...chats];
+      showModalMessage("Un chat ha sido eliminado", true);
 
       setChats(chatsCopy.filter((chat) => chat._id !== chatId));
     };
 
+    socket.emit("client:joinchats", chats);
     socket.on("server:newchat", newChat);
     socket.on("server:deletechat", deleteChat);
+    socket.on("server:newmessage", replaceChats);
 
     return () => {
       socket.off("server:newchat", newChat);
       socket.off("server:deletechat", deleteChat);
+      socket.off("server:newmessage", replaceChats);
     };
   }, [chats]);
 
@@ -169,6 +181,8 @@ function ChatsPage() {
           )}
         </div>
       </main>
+      
+      <ModalMessage key={"chat"} show={modalMessage?.show} hide={modalMessage?.hide} error={modalMessage?.error}>{modalMessage?.message}</ModalMessage>
     </>
   );
 }

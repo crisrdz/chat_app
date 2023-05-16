@@ -1,0 +1,37 @@
+.modal-msg {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  border: 3px solid var(--color-green-primary);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 0.4rem 0 var(--color-green-primary);
+
+  transform: translateY(30vh);
+  max-width: 12rem;
+  background-color: var(--color-white);
+}
+
+.modal-msg--error {
+  border-color: red;
+  box-shadow: 0 0 0.4rem 0 coral;
+  color: red;
+}
+
+.modal-msg--show {
+  animation: modal-show 3s forwards;
+}
+
+@keyframes modal-show {
+  0% { transform: translateY(30vh) }
+  100% { transform: translateY(0) }
+}
+
+.modal-msg--hide {
+  animation: modal-hide 3s forwards;
+}
+
+@keyframes modal-hide {
+  0% { transform: translateY(0) }
+  100% { transform: translateY(30vh) }
+}

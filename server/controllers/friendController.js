@@ -61,6 +61,10 @@ export const addFriend = async (req, res) => {
     user.friends.push(friend._id);
     friend.friends.push(user._id);
 
+    const io = req.app.get("io");
+
+    io.to(`user:${friend._id.toString()}`).emit("server:newfriend", user.username);
+
     await user.save();
     await friend.save();
 
@@ -104,25 +108,35 @@ export const deleteFriend = async (req, res) => {
     const { username } = req.body;
 
     const user = await User.findById(req.userId).populate("friends");
+    const friend = await User.findOne({username});
 
-    let isDeleted = false;
+    let isDeleted = [false, false];
 
     for (let i = 0; i < user.friends.length; i++) {
       if (username === user.friends[i].username) {
         user.friends.splice(i, 1);
-        isDeleted = true;
+        isDeleted[0] = true;
         break;
       }
     }
 
-    if (!isDeleted) {
+    for (let i = 0; i < friend.friends.length; i++) {
+      if (user._id.toString() === friend.friends[i].toString()) {
+        friend.friends.splice(i, 1);
+        isDeleted[1] = true;
+        break;
+      }
+    }
+
+    if (!isDeleted[0] || !isDeleted[1]) {
       return res.status(404).json({
         success: false,
-        message: "Amigo no encontrado",
+        message: "Error al eliminar: amigo no encontrado.",
       });
     }
 
     await user.save();
+    await friend.save();
     return res.sendStatus(204);
   } catch (error) {
     return res.status(500).json({
