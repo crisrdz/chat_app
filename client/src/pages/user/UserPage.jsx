@@ -209,7 +209,7 @@ function UserPage() {
                 onClick={() => {
                   setModalConfirm({
                     show: true,
-                    question: "¿Estás seguro que quieres cerrar sesión?",
+                    question: "¿Estás seguro de que quieres cerrar sesión?",
                     onConfirm: () => {
                       localStorage.removeItem("user")
                       setModalConfirm({show: false, question: ""});

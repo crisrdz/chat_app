@@ -9,7 +9,7 @@ import "./LandingPage.css";
 function LandingPage() {
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const isLogged = JSON.parse(localStorage.getItem("user"));
+  const [isLogged, setIsLogged] = useState(!!JSON.parse(localStorage.getItem("user")));
 
   return (
     <>
@@ -17,7 +17,8 @@ function LandingPage() {
         <NavbarMenu
           setShowSignin={setShowSignin}
           setShowSignup={setShowSignup}
-          isLogged={!!isLogged}
+          isLogged={isLogged}
+          setIsLogged={setIsLogged}
         />
       </Header>
       
