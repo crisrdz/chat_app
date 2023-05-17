@@ -1,8 +1,14 @@
 import { Form } from "react-router-dom";
 import "../Tabs.css";
 
-function TabFriendsChat({ friends, className }) {
-  if(!friends || friends?.length === 0) {
+function TabFriendsChat({ friends, className, error = null }) {
+  if(error) {
+    return (
+      <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
+    )
+  }
+
+  if(friends?.length === 0) {
     return (
       <p className={className ? className : ""}>¡No tienes amigos!</p>
     )

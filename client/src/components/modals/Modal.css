@@ -160,6 +160,7 @@
 
 .tab__tab-body {
   padding: 1rem;
+  overflow: auto;
 }
 
 .modal__tab--hidden {

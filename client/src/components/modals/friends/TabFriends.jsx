@@ -3,7 +3,14 @@ import { AiFillCloseSquare } from "react-icons/ai";
 import { deleteFriend } from "../../../api/friends";
 import "../Tabs.css";
 
-function TabFriends({ className, friends, searchFriends }) {
+function TabFriends({ className, friends, searchFriends, errorState}) {
+  const {error, setError} = errorState;
+  if(error) {
+    return (
+      <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
+    )
+  }
+
   useEffect(() => {
     searchFriends();
   }, []);
@@ -14,8 +21,9 @@ function TabFriends({ className, friends, searchFriends }) {
       await deleteFriend(token, username);
 
       await searchFriends();
+      setError(null)
     } catch (error) {
-      console.error("ERROR");
+      setError("Error al eliminar amigo");
     }
   }
 

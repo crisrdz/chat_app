@@ -34,8 +34,9 @@ function TabAddFriends({ className }) {
       setStatus(STATUS.ERROR);
       if (error.status === 404) {
         setError("Usuario no encontrado");
+        return;
       }
-      console.error("ERROR");
+      setError("Ha ocurrido un error en el servidor");
     }
   }
 
@@ -47,7 +48,7 @@ function TabAddFriends({ className }) {
       setError("");
       setStatus(STATUS.NORMAL);
     } catch (error) {
-      console.error(error);
+      setError("Ha ocurrido un error en el servidor");
     }
   }
 

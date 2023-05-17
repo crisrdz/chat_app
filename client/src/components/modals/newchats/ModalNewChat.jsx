@@ -8,9 +8,10 @@ import TabPublicUsers from "./TabPublicUsers";
 function ModalNewChat({ setShow, chats }) {
   const [tabFriends, setTabFriends] = useState(true);
   const [tabPublicUsers, setTabPublicUsers] = useState(false)
-  const [users, setUsers] = useState();
-  const [friends, setFriends] = useState(null);
-  
+  const [users, setUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const [error, setError] = useState();
+
   const usersWithChat = chats.flatMap(chat => chat.users.map(user => user.username));
 
   async function searchFriends() {
@@ -22,23 +23,29 @@ function ModalNewChat({ setShow, chats }) {
       friends = friends.filter(friend => !usersWithChat.includes(friend.username));
 
       setFriends(friends);
+      setError(null);
     } catch (error) {
-      console.error("ERROR");
+      setError("Ha ocurrido un error en el servidor. Reinténtelo más tarde.");
     }
   }
 
-  async function setUsersSelect () {
-    const { token } = JSON.parse(localStorage.getItem("user"));
-    const data = await getPublicUsers(token, 1);
-    let users = data.users;
+  async function searchPublicUsers() {
+    try {
+      const { token } = JSON.parse(localStorage.getItem("user"));
+      const data = await getPublicUsers(token, 1);
+      let users = data.users;
 
-    users = users.filter(user => !usersWithChat.includes(user.username));
+      users = users.filter(user => !usersWithChat.includes(user.username));
 
-    setUsers(users);
+      setUsers(users);
+      setError(null);
+    } catch (error) {
+      setError("Ha ocurrido un error en el servidor. Reinténtelo más tarde.");
+    }
   }
 
   useEffect(() => {
-    setUsersSelect();
+    searchPublicUsers();
     searchFriends();
   }, [])
 
@@ -73,8 +80,8 @@ function ModalNewChat({ setShow, chats }) {
         </div>
 
         <div className="tab__tab-body">
-          <TabFriendsChat className={!tabFriends && "modal__tab--hidden"} friends={friends} />
-          <TabPublicUsers className={!tabPublicUsers && "modal__tab--hidden"} users={users} />
+          <TabFriendsChat className={!tabFriends && "modal__tab--hidden"} friends={friends} error={error} />
+          <TabPublicUsers className={!tabPublicUsers && "modal__tab--hidden"} users={users} error={error} />
         </div>
       </div>
       

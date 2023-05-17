@@ -1,7 +1,13 @@
 import { Form } from "react-router-dom";
 import "../Tabs.css";
 
-function TabPublicUsers({ users, className }) {
+function TabPublicUsers({ users, className, error = null }) {
+  if(error) {
+    return (
+      <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
+    )
+  }
+
   if(!users || users?.length === 0) {
     return (
       <p className={className ? className : ""}>¡No existen usuarios públicos!</p>

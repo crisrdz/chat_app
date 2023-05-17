@@ -15,7 +15,6 @@ export async function action({ request }) {
   } catch (error) {
     if(error.status === 400) {
       const data = await error.json();
-      console.error(data);
       return data.message;
     }
     throw error;
