@@ -9,6 +9,10 @@
   --color-green-primary: #3B7861;
   --color-green-secondary: #67BDAF;
   --color-green-lg: #B5EAD7;
+
+  --color-red-primary: #DC143C;
+  --color-red-secondary: #FFC0CB;
+  --color-red-lg: #FFD1DC;
 }
 
 body {

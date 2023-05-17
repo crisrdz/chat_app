@@ -10,7 +10,7 @@ function TabFriendsChat({ friends, className, error = null }) {
 
   if(friends?.length === 0) {
     return (
-      <p className={className ? className : ""}>¡No tienes amigos!</p>
+      <p className={className ? className : ""}>¡No hay amigos disponibles para iniciar un nuevo chat!</p>
     )
   }
 

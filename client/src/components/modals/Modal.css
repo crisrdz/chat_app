@@ -166,3 +166,46 @@
 .modal__tab--hidden {
   display: none !important;
 }
+
+.modal-confirmation {
+  box-sizing: border-box;
+  padding: 1.1rem;
+  width: 80%;
+}
+
+.modal-confirmation__question {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.modal-confirmation__btn-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-confirmation__btn-container__btn {
+  border: 2px solid;
+  border-radius: 0.8rem;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.modal-confirmation__btn-container__btn-confirm {
+  border-color: var(--color-green-primary);
+  background-color: var(--color-green-lg);
+}
+
+.modal-confirmation__btn-container__btn-confirm:hover {
+  background-color: var(--color-green-secondary);
+}
+
+.modal-confirmation__btn-container__btn-cancel {
+  border-color: var(--color-red-primary);
+  background-color: var(--color-red-lg);
+}
+
+.modal-confirmation__btn-container__btn-cancel:hover {
+  background-color: var(--color-red-secondary);
+}

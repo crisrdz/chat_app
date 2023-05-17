@@ -1,4 +1,4 @@
-import { Link, Outlet, redirect, useLoaderData } from "react-router-dom";
+import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import {
   AiOutlineBell,
   AiOutlineUser,
@@ -13,6 +13,7 @@ import { getUser } from "../../api/user";
 import { addFriend, declineFriend } from "../../api/friends";
 import ModalMessage from "../../components/modals/message/ModalMessage";
 import { useModalMessage } from "../../hooks/modalHooks";
+import ModalConfirmation from "../../components/modals/ModalConfirmation";
 
 export async function loader() {
   try {
@@ -39,8 +40,13 @@ function UserPage() {
   const user = useLoaderData();
   const refMenu = useRef(null);
   const refRequests = useRef(null);
+  const navigate = useNavigate();
   const [requestUsernames, setRequestUsernames] = useState(user.friendRequests);
   const {modalMessage, showModalMessage} = useModalMessage();
+  const [modalConfirm, setModalConfirm] = useState({
+    show: false,
+    question: ""
+  });
 
   useEffect(() => {
     socket.connect();
@@ -161,7 +167,17 @@ function UserPage() {
                             />
                             <AiOutlineCloseCircle
                               className="navbar-user__user-menu__menu__item-buttons_decline"
-                              onClick={() => declineRequest(request.username)}
+                              onClick={() => 
+                                setModalConfirm({
+                                  show: true,
+                                  question: "¿Estás seguro de rechazar esta solicitud?",
+                                  onConfirm: () => {
+                                    declineRequest(request.username);
+                                    setModalConfirm({show: false, question: ""});
+                                  },
+                                  onCancel: () => {setModalConfirm({show: false, question: ""})}
+                                })  
+                              }
                             />
                           </div>
                         </div>
@@ -188,19 +204,36 @@ function UserPage() {
               >
                 Chats
               </Link>
-              <Link
-                to={"/"}
+              <button
                 className="navbar-user__user-menu__menu__item navbar-user__user-menu__menu__logout-item"
-                onClick={() => localStorage.removeItem("user")}
+                onClick={() => {
+                  setModalConfirm({
+                    show: true,
+                    question: "¿Estás seguro que quieres cerrar sesión?",
+                    onConfirm: () => {
+                      localStorage.removeItem("user")
+                      setModalConfirm({show: false, question: ""});
+                      navigate("/");
+                    },
+                    onCancel: () => {setModalConfirm({show: false, question: ""})}
+                  })
+                }}
               >
                 Cerrar sesión
-              </Link>
+              </button>
             </div>
           </div>
         </div>
       </Header>
       <Outlet context={showModalMessage}/>
       <ModalMessage key={"friend"} show={modalMessage?.show} hide={modalMessage?.hide} error={modalMessage?.error}>{modalMessage?.message}</ModalMessage>
+      {modalConfirm?.show && (
+        <ModalConfirmation
+          question={modalConfirm.question}
+          onConfirm={modalConfirm.onConfirm}
+          onCancel={modalConfirm.onCancel}
+        />
+      )}
     </div>
   );
 }

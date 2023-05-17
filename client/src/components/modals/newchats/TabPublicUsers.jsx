@@ -10,7 +10,7 @@ function TabPublicUsers({ users, className, error = null }) {
 
   if(!users || users?.length === 0) {
     return (
-      <p className={className ? className : ""}>¡No existen usuarios públicos!</p>
+      <p className={className ? className : ""}>¡No hay usuarios públicos disponibles para iniciar un nuevo chat!</p>
     )
   }
 

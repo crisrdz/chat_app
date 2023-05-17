@@ -75,9 +75,15 @@
 
 .navbar-user__user-menu__menu__item {
   margin: 0;
+  padding: 0;
+  border: 0;
+  background: 0;
   text-decoration: none;
   color: var(--color-primary);
   transition: all 0.3s ease;
+  font-size: 1rem;
+  text-align: start;
+  cursor: pointer;
 }
 
 .navbar-user__user-menu__menu__item-requests {

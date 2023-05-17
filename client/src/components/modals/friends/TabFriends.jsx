@@ -1,14 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { deleteFriend } from "../../../api/friends";
+import ModalConfirmation from "../ModalConfirmation";
 import "../Tabs.css";
 
-function TabFriends({ className, friends, searchFriends, errorState}) {
-  const {error, setError} = errorState;
-  if(error) {
+function TabFriends({ className, friends, searchFriends, errorState }) {
+  const [modalConfirm, setModalConfirm] = useState({
+    show: false,
+    question: "",
+  });
+  const { error, setError } = errorState;
+  if (error) {
     return (
-      <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
-    )
+      <p className={className ? className : ""} style={{ color: "red" }}>
+        {error}
+      </p>
+    );
   }
 
   useEffect(() => {
@@ -21,34 +28,65 @@ function TabFriends({ className, friends, searchFriends, errorState}) {
       await deleteFriend(token, username);
 
       await searchFriends();
-      setError(null)
+      setError(null);
     } catch (error) {
       setError("Error al eliminar amigo");
     }
   }
 
   return (
-    <table className={`tab__table ${className ? className : ""}`}>
-      <thead>
-        <tr>
-          <th className="tab__table__td">Nombre de usuario</th>
-          <th className="tab__table__td">Eliminar amigo</th>
-        </tr>
-      </thead>
-      <tbody>
-        {friends &&
-          friends.map((friend) => (
-            <tr key={friend.username}>
-              <td className="tab__table__td">{friend.username}</td>
-              <td className="tab__table__td">
-                <button type="submit" className="tab__table__td__btn" onClick={() => {handleDeleteFriend(friend.username)}}>
-                  <AiFillCloseSquare className="tab__table__td__btn__icon"/>
-                </button>
-              </td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
+    <>
+      <table className={`tab__table ${className ? className : ""}`}>
+        <thead>
+          <tr>
+            <th className="tab__table__td">Nombre de usuario</th>
+            <th className="tab__table__td">Eliminar amigo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {friends &&
+            friends.map((friend) => (
+              <tr key={friend.username}>
+                <td className="tab__table__td">{friend.username}</td>
+                <td className="tab__table__td">
+                  <button
+                    type="submit"
+                    className="tab__table__td__btn"
+                    onClick={() => {
+                      setModalConfirm({
+                        show: true,
+                        question: `¿Estás seguro de eliminar a ${friend.username} de tus amigos?`,
+                        onConfirm: () => {
+                          handleDeleteFriend(friend.username);
+                          setModalConfirm({
+                            show: false,
+                            question: "",
+                          });
+                        },
+                        onCancel: () => {
+                          setModalConfirm({
+                            show: false,
+                            question: "",
+                          });
+                        },
+                      });
+                    }}
+                  >
+                    <AiFillCloseSquare className="tab__table__td__btn__icon" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+      {modalConfirm?.show && (
+        <ModalConfirmation
+          question={modalConfirm.question}
+          onConfirm={modalConfirm.onConfirm}
+          onCancel={modalConfirm.onCancel}
+        />
+      )}
+    </>
   );
 }
 
