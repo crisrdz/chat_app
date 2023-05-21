@@ -60,7 +60,6 @@ export async function action({ params, request }) {
 }
 
 function ChatPage() {
-  const data = useLoaderData();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -78,7 +77,7 @@ function ChatPage() {
     };
   }, []);
 
-  return <ChatBox hasChat={true} key={data.chat._id} />;
+  return <ChatBox hasChat={true} key={id} />;
 }
 
 export default ChatPage;

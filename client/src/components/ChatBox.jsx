@@ -82,13 +82,23 @@ function ChatBox({ hasChat }) {
       socket.off("server:newmessage", newMessageReceived);
     };
   }, [messagesState]);
+  
+  const days = Object.keys(messagesState).sort((a, b) => {
+    const aDate = a.split("-");
+    const bDate = b.split("-");
+    if(new Date(aDate[2], aDate[1], aDate[0]) > new Date(bDate[2], bDate[1], bDate[0])) {
+      return -1
+    } else {
+      return 1;
+    }
+  });
 
   return (
     <div className="chat-box">
       <div className="chat-box__user">{chat.users[0].username === username ? chat.users[1].username : chat.users[0].username}</div>
       <div className="chat-box__messages">
         {
-          Object.keys(messagesState).map(day => {
+          days.map(day => {
             return (
               <div key={day} style={{display: "flex", flexDirection: "column"}}>
                 <strong className="chat-box__messages__date">{day}</strong>

@@ -7,7 +7,7 @@
 
 .chat-page-left__chats {
   box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-right: 20px;
   height: 100%;
   width: 100%;
