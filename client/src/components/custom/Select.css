@@ -1,0 +1,47 @@
+.select {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 1rem;
+}
+
+.select--show {
+  box-shadow: 0 0 3px 0 yellow;
+}
+
+.select__options {
+  border: 1px solid var(--color-primary);
+  box-sizing: border-box;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: calc(50%);
+  transform: translateX(-50%);
+  width: 90%;
+  margin: 0 auto;
+  background-color: var(--color-white);
+  
+  height: auto;
+  max-height: 8rem;
+  overflow: auto;
+  display: none;
+}
+
+.select__options--show {
+  display: inherit;
+}
+
+.select__value--selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.select__value {
+  padding: 0.4rem;
+}
+
+.select__value:hover {
+  background-color: var(--color-lg-primary);
+  cursor: pointer;
+}

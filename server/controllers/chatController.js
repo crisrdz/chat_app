@@ -5,10 +5,6 @@ import { isValidObjectId } from 'mongoose'
 
 export const getChats = async (req, res) => {
   try {
-    const page = isNaN(req.query.page) ? 1 : req.query.page;
-    const limit = 10;
-    const skip = limit * (page - 1);
-
     const chats = await Chat.find(
       { users: req.userId },
       {
@@ -17,8 +13,6 @@ export const getChats = async (req, res) => {
         messages: 1,
       },
       {
-        limit,
-        skip,
         sort: "-updatedAt",
       }
     )
@@ -26,9 +20,9 @@ export const getChats = async (req, res) => {
       .populate({
         path: "messages",
         select: "-_id body user createdAt",
+        perDocumentLimit: 1,
         options: {
           sort: "-createdAt",
-          limit: 1,
         },
         populate: {
           path: "user",
@@ -60,12 +54,20 @@ export const getChat = async (req, res) => {
       });
     }
 
+    const page = isNaN(req.query.page) ? 1 : req.query.page;
+    const limit = 100;
+    const skip = limit * (page - 1);
+
     const chat = await Chat.findById(chatId, { id: 1, users: 1, messages: 1 })
       .populate({ path: "users", select: "username -_id" })
       .populate({
         path: "messages",
         select: "-_id body user createdAt",
-        options: { sort: "-createdAt" },
+        options: { 
+          sort: "-createdAt",
+          limit,
+          skip,
+        },
         populate: {
           path: "user",
           select: "-_id username",

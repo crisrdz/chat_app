@@ -9,6 +9,7 @@ function ModalNewChat({ setShow, chats }) {
   const [tabFriends, setTabFriends] = useState(true);
   const [tabPublicUsers, setTabPublicUsers] = useState(false)
   const [users, setUsers] = useState([]);
+  const [hasMorePublicUsers, setHasMorePublicUsers] = useState(true)
   const [friends, setFriends] = useState([]);
   const [error, setError] = useState();
 
@@ -29,15 +30,19 @@ function ModalNewChat({ setShow, chats }) {
     }
   }
 
-  async function searchPublicUsers() {
+  async function searchPublicUsers(page) {
     try {
       const { token } = JSON.parse(localStorage.getItem("user"));
-      const data = await getPublicUsers(token, 1);
+      const data = await getPublicUsers(token, page);
       let users = data.users;
+
+      if(users.length < 20) {
+        setHasMorePublicUsers(false);
+      }
 
       users = users.filter(user => !usersWithChat.includes(user.username));
 
-      setUsers(users);
+      setUsers(prev => prev.concat(users));
       setError(null);
     } catch (error) {
       setError("Ha ocurrido un error en el servidor. Reinténtelo más tarde.");
@@ -45,7 +50,7 @@ function ModalNewChat({ setShow, chats }) {
   }
 
   useEffect(() => {
-    searchPublicUsers();
+    searchPublicUsers(1);
     searchFriends();
   }, [])
 
@@ -81,7 +86,7 @@ function ModalNewChat({ setShow, chats }) {
 
         <div className="tab__tab-body">
           <TabFriendsChat className={!tabFriends && "modal__tab--hidden"} friends={friends} error={error} />
-          <TabPublicUsers className={!tabPublicUsers && "modal__tab--hidden"} users={users} error={error} />
+          <TabPublicUsers className={!tabPublicUsers && "modal__tab--hidden"} users={users} error={error} searchPublicUsers={searchPublicUsers} hasMore={hasMorePublicUsers} />
         </div>
       </div>
       

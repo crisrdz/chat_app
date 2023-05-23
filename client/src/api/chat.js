@@ -19,9 +19,9 @@ export async function getChats(token) {
   }
 }
 
-export async function getChat(token, chatId) {
+export async function getChat(token, chatId, page) {
   try {
-    const data = await fetch (`/api/chat/${chatId}`, {
+    const data = await fetch (`/api/chat/${chatId}?page=${page}`, {
       method: "GET",
       headers: {
         "X-Access-Token": token

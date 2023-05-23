@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { redirect, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import ChatBox from "../../../components/ChatBox";
 import { getChat, deleteChat } from "../../../api/chat";
 import { socket } from "../../../socket";
@@ -8,7 +8,7 @@ export async function loader({ params }) {
   try {
     const { token } = JSON.parse(localStorage.getItem("user"));
 
-    const data = await getChat(token, params.id);
+    const data = await getChat(token, params.id, 1);
     const messages = {};
     data.chat.messages.forEach(message => {
       message.createdAt = new Date(message.createdAt);

@@ -55,7 +55,7 @@ export async function action({ request }) {
       throw new Error("Su sesión ha expirado");
     }
 
-    throw new Error("Eror al crear chat");
+    throw new Error("Error al crear chat");
   }
 }
 

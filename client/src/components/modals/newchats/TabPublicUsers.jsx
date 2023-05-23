@@ -1,29 +1,34 @@
+import { useState } from "react";
 import { Form } from "react-router-dom";
+import Select from '../../custom/Select'
 import "../Tabs.css";
 
-function TabPublicUsers({ users, className, error = null }) {
+function TabPublicUsers({ users, className, error = null, searchPublicUsers, hasMore }) {
   if(error) {
     return (
       <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
     )
   }
 
-  if(!users || users?.length === 0) {
+  if(users?.length === 0) {
     return (
       <p className={className ? className : ""}>¡No hay usuarios públicos disponibles para iniciar un nuevo chat!</p>
     )
   }
 
+  const [selectedValue, setSelectedValue] = useState(null);
+
   return (
     <Form method="POST" className={className ? className : ""} style={{display: "flex", flexDirection: "column"}}>
-      <select name="user" className="modal__input">
-        {users && users.map(user => {
-          return (
-            <option value={user.username} key={user.username}>{user.username}</option>
-          )
-        })}
-      </select>
-      <button type="submit" className="modal__btn-submit">Nuevo chat</button>
+
+      <input type="hidden" name="user" value={selectedValue?.value || ""} />
+      <Select
+        options={users.map(user => ({label: user.username, value: user.username}))}
+        hasMore={hasMore}
+        loadData={searchPublicUsers}
+        selectedOptionState={[selectedValue, setSelectedValue]}
+      />
+      {selectedValue && <button type="submit" className="modal__btn-submit">Nuevo chat</button>}
     </Form>
   )
 }

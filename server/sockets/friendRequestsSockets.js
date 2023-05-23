@@ -2,8 +2,9 @@ import User from "../models/User.js";
 
 export async function newFriendRequest(username, userId) {
   const friend = await User.findOne({ username });
+  const user = await User.findById(userId).lean();
 
-  if (friend.friends.length > 50) {
+  if (friend.friends.length >= 50 || user.friends.length >= 50) {
     return {
       success: false,
       message: "Límite de amigos alcanzado",
@@ -26,8 +27,6 @@ export async function newFriendRequest(username, userId) {
 
   friend.friendRequests.push(userId);
   await friend.save();
-
-  const user = await User.findById(userId).lean();
 
   return {
     success: true,

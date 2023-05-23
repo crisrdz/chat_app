@@ -132,7 +132,6 @@
 .tab {
   border: 1px solid var(--color-primary);
   border-radius: 1rem;
-  overflow: hidden;
 }
 
 .tab__tab-header {
@@ -140,6 +139,9 @@
   grid-template-columns: 50% 50%;
   height: 2rem;
   border-bottom: 1px solid var(--color-tertiary);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  overflow: hidden;
 }
 
 .tab__tab-header__item {
@@ -160,7 +162,6 @@
 
 .tab__tab-body {
   padding: 1rem;
-  overflow: auto;
 }
 
 .modal__tab--hidden {
