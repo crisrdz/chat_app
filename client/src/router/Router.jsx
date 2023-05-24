@@ -6,12 +6,16 @@ import { action as loginAction } from "../components/modals/Login";
 import { action as registerAction } from "../components/modals/Register";
 
 // User pages
-import UserPage, { loader as userLoader } from "../pages/user/UserPage";
+import UserPage, { loader, loader as userLoader } from "../pages/user/UserPage";
 
 import ProfilePage from "../pages/user/profile/ProfilePage";
 import ViewProfile from "../pages/user/profile/ViewProfile";
-import EditProfilePage, { action as actionEditProfile } from "../pages/user/profile/EditProfilePage";
-import ChangeVisibilityPage, { action as actionVisibility } from "../pages/user/profile/ChangeVisibilityPage";
+import EditProfilePage, {
+  action as actionEditProfile,
+} from "../pages/user/profile/EditProfilePage";
+import ChangeVisibilityPage, {
+  action as actionVisibility,
+} from "../pages/user/profile/ChangeVisibilityPage";
 
 import ChatsPage, {
   loader as chatsLoader,
@@ -21,6 +25,11 @@ import ChatPage, {
   loader as chatLoader,
   action as chatAction,
 } from "../pages/user/chat/ChatPage";
+
+// Admin page
+import AdminPage, {
+  loader as adminLoader,
+} from "../pages/user/admin/AdminPage";
 
 // Error page
 import ErrorPage from "../pages/error/ErrorPage";
@@ -56,19 +65,19 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ViewProfile />
+            element: <ViewProfile />,
           },
           {
             path: "edit",
             action: actionEditProfile,
-            element: <EditProfilePage />
+            element: <EditProfilePage />,
           },
           {
             path: "visibility",
             action: actionVisibility,
-            element: <ChangeVisibilityPage />
+            element: <ChangeVisibilityPage />,
           },
-        ]
+        ],
       },
       {
         path: "chats",
@@ -83,6 +92,11 @@ const router = createBrowserRouter([
             action: chatAction,
           },
         ],
+      },
+      {
+        path: "admin",
+        element: <AdminPage />,
+        loader: adminLoader,
       },
     ],
   },

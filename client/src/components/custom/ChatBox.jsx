@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { AiOutlineLoading } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { getChat } from "../api/chat";
-import { socket } from "../socket";
+import { getChat } from "../../api/chat";
+import { socket } from "../../socket";
 import "./ChatBox.css";
 
 function ChatBox({ hasChat }) {

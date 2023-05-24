@@ -204,6 +204,15 @@ function UserPage() {
               >
                 Chats
               </Link>
+              {
+                user.roles.some(role => role.role === "Admin") &&
+                <Link
+                  to={"/user/admin"}
+                  className="navbar-user__user-menu__menu__item"
+                >
+                  Admin
+                </Link>
+              }
               <button
                 className="navbar-user__user-menu__menu__item navbar-user__user-menu__menu__logout-item"
                 onClick={() => {

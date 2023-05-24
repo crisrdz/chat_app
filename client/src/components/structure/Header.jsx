@@ -7,7 +7,7 @@ function Header ({children}) {
       <nav className="navbar">
         <div className='navbar__section'>
           <ul className='navbar__list'>
-            <NavLink to="/" className='navbar__list__link'>ChatApp</NavLink>
+            <NavLink to="/" className='navbar__list__link navbar__list__app-name'>ChatApp</NavLink>
           </ul>
         </div>
         {children}

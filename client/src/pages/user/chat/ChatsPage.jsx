@@ -9,12 +9,12 @@ import { useModalMessage } from "../../../hooks/modalHooks";
 import { getChats } from "../../../api/chat";
 import { createChat } from "../../../api/chat";
 import { socket } from '../../../socket';
-import Chat from "../../../components/Chat";
 import ModalFriends from "../../../components/modals/friends/ModalFriends";
 import ModalNewChat from "../../../components/modals/newchats/ModalNewChat";
-import Button from "../../../components/Button";
-import ChatBox from "../../../components/ChatBox";
 import ModalMessage from "../../../components/modals/message/ModalMessage";
+import Chat from "../../../components/custom/Chat";
+import Button from "../../../components/custom/Button";
+import ChatBox from "../../../components/custom/ChatBox";
 import "./ChatsPage.css";
 
 export async function loader() {

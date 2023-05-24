@@ -1,0 +1,125 @@
+.main-admin {
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding: 1rem 0;
+  box-sizing: border-box;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 2.6rem;
+  }
+}
+
+.reload-container {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  margin: 0.6rem;
+}
+
+.reload-container__box {
+  border: 2px solid black;
+  padding: 0.2rem;
+  border-radius: 0.7rem;
+  box-shadow: 0 0 0.1rem var(--color-green-primary);
+  display: flex;
+  transition: all 0.3s ease;
+}
+
+.reload-container__box:hover {
+  background-color: var(--color-green-lg);
+}
+
+.reload-container__box__btn {
+  color: var(--color-green-primary);
+  cursor: pointer;
+}
+
+.reload-container__box__btn--loading {
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.table-container {
+  width: max-content;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  margin: 0 auto;
+}
+
+.table-container__table {
+  border-collapse: collapse;
+  box-shadow: 0 0 0.5rem 0 var(--color-secondary);
+}
+
+@media (min-width: 1024px) {
+  .table-container__table {
+    font-size: 1.2rem;
+  }
+}
+
+.table-container__table__row:hover {
+  background-color: var(--color-lg-primary);
+}
+
+.table-container__table__row__cell {
+  border-collapse: collapse;
+  padding: 0.3rem;
+  border: 2px solid var(--color-primary);
+}
+
+@media (min-width: 768px) {
+  .table-container__table__row__cell {
+    padding: 0.6rem;
+  }
+}
+
+.table-container__pages {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.table-container__pages__option {
+  --option-size: 2.4rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: 0.5rem;
+  height: var(--option-size);
+  width: var(--option-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-container__pages__option--hidden {
+  visibility: hidden;
+}
+
+.table-container__pages__option-page {
+  width: 4rem;
+}
+
+.table-container__pages__option:hover {
+  background-color: var(--color-lg-primary);
+  cursor: pointer;
+}

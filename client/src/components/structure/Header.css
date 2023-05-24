@@ -36,8 +36,13 @@
   text-decoration: none;
   transition: color 0.6s ease;
   cursor: pointer;
+  align-self: center;
 }
 
 .navbar__list__link:hover {
   color: var(--color-lg-secondary);
+}
+
+.navbar__list__app-name {
+  font-size: 1.3rem;
 }

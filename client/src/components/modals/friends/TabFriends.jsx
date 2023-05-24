@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { AiFillCloseSquare } from "react-icons/ai";
+import { AiFillCloseSquare, AiOutlineLoading, AiOutlineReload } from "react-icons/ai";
 import { deleteFriend } from "../../../api/friends";
 import ModalConfirmation from "../ModalConfirmation";
 import "../Tabs.css";
 
 function TabFriends({ className, friends, searchFriends, errorState }) {
+  const [loading, setLoading] = useState(false);
   const [modalConfirm, setModalConfirm] = useState({
     show: false,
     question: "",
   });
   const { error, setError } = errorState;
+
   if (error) {
     return (
       <p className={className ? className : ""} style={{ color: "red" }}>
@@ -79,6 +81,16 @@ function TabFriends({ className, friends, searchFriends, errorState }) {
             ))}
         </tbody>
       </table>
+      <div className={`tab__reload-container ${className ? className : ""}`}>
+        {loading ? 
+          <AiOutlineLoading className="tab__reload-container__btn tab__reload-container__btn--loading"/>
+        : (
+          <AiOutlineReload onClick={() => {
+            setLoading(true);
+            searchFriends().then(() => setLoading(false));
+          }} className="tab__reload-container__btn"/>
+        )}
+      </div>
       {modalConfirm?.show && (
         <ModalConfirmation
           question={modalConfirm.question}

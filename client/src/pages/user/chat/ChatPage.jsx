@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { redirect, useNavigate, useParams } from "react-router-dom";
-import ChatBox from "../../../components/ChatBox";
 import { getChat, deleteChat } from "../../../api/chat";
 import { socket } from "../../../socket";
+import ChatBox from "../../../components/custom/ChatBox";
 
 export async function loader({ params }) {
   try {

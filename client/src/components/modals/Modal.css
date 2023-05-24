@@ -162,6 +162,10 @@
 
 .tab__tab-body {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 10rem;
 }
 
 .modal__tab--hidden {

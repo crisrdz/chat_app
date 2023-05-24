@@ -28,9 +28,38 @@
 .tab__table__td__btn__icon {
   color: red;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .tab__container {
   display: flex;
   flex-direction: column;
+}
+
+.tab__reload-container {
+  align-self: center;
+  margin-top: 0.7rem;
+  padding: 0.1rem;
+  font-size: 1.2rem;
+  border: 2px solid black;
+  border-radius: 0.3rem;
+  display: flex;
+  color: var(--color-green-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 1px var(--color-green-secondary);
+}
+
+.tab__reload-container:hover {
+  background-color: var(--color-green-lg);
+}
+
+.tab__reload-container__btn--loading {
+  animation: loading 2s ease infinite;
+}
+
+@keyframes loading {
+  to {
+    transform: rotateZ(360deg);
+  }
 }

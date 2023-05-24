@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Form, useNavigate, useParams, useSubmit } from 'react-router-dom'
 import { AiOutlineMenu } from 'react-icons/ai'
-import ModalConfirmation from './modals/ModalConfirmation';
+import ModalConfirmation from '../modals/ModalConfirmation';
 import './Chat.css';
 
 function Chat({chat}) {
@@ -13,16 +13,16 @@ function Chat({chat}) {
   const [modalConfirm, setModalConfirm] = useState({
     show: false,
     question: ""
-  })
+  });
 
   let dateLastMessage;
   if(chat.messages.length > 0) {
     dateLastMessage = new Date(chat.messages[0].createdAt);
     
     if(dateLastMessage.toLocaleDateString() === new Date().toLocaleDateString()) {
-      dateLastMessage = dateLastMessage.toLocaleTimeString(undefined, {timeStyle: "short"})
+      dateLastMessage = dateLastMessage.toLocaleTimeString(undefined, {timeStyle: "short"});
     } else {
-      dateLastMessage = dateLastMessage.toLocaleDateString(undefined, {dateStyle: "short"})
+      dateLastMessage = dateLastMessage.toLocaleDateString(undefined, {dateStyle: "short"});
     }
   }
   
@@ -31,12 +31,12 @@ function Chat({chat}) {
   const friendUsername = chat.users[0].username === username ? chat.users[1].username : chat.users[0].username;
 
   function handleClick() {
-    navigate(`${chat._id}`)
+    navigate(`${chat._id}`);
   }
 
   function handleOpenMenu (e) {
     e.stopPropagation();
-    setShowMenu(prev => !prev)
+    setShowMenu(prev => !prev);
   }
 
   useEffect(() => {
