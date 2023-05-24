@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
+import { AiOutlineLoading } from "react-icons/ai";
 import Select from '../../custom/Select'
 import "../Tabs.css";
 
 function TabPublicUsers({ users, className, error = null, searchPublicUsers, hasMore }) {
+  const navigation = useNavigation();
+
   if(error) {
     return (
       <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
@@ -28,7 +31,11 @@ function TabPublicUsers({ users, className, error = null, searchPublicUsers, has
         loadData={searchPublicUsers}
         selectedOptionState={[selectedValue, setSelectedValue]}
       />
-      {selectedValue && <button type="submit" className="modal__btn-submit">Nuevo chat</button>}
+      {navigation.state !== "idle" ? (
+        <div className="modal__btn-submit"><AiOutlineLoading className="default-loading"/></div>
+      ) : (
+        selectedValue && <button type="submit" className="modal__btn-submit">Nuevo chat</button>
+      )}
     </Form>
   )
 }

@@ -57,9 +57,3 @@
 .tab__reload-container__btn--loading {
   animation: loading 2s ease infinite;
 }
-
-@keyframes loading {
-  to {
-    transform: rotateZ(360deg);
-  }
-}

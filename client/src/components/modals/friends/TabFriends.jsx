@@ -4,7 +4,7 @@ import { deleteFriend } from "../../../api/friends";
 import ModalConfirmation from "../ModalConfirmation";
 import "../Tabs.css";
 
-function TabFriends({ className, friends, searchFriends, errorState }) {
+function TabFriends({ className, friends, searchFriends, errorState, loadingFriends}) {
   const [loading, setLoading] = useState(false);
   const [modalConfirm, setModalConfirm] = useState({
     show: false,
@@ -51,31 +51,35 @@ function TabFriends({ className, friends, searchFriends, errorState }) {
               <tr key={friend.username}>
                 <td className="tab__table__td">{friend.username}</td>
                 <td className="tab__table__td">
-                  <button
-                    type="submit"
-                    className="tab__table__td__btn"
-                    onClick={() => {
-                      setModalConfirm({
-                        show: true,
-                        question: `¿Estás seguro de eliminar a ${friend.username} de tus amigos?`,
-                        onConfirm: () => {
-                          handleDeleteFriend(friend.username);
-                          setModalConfirm({
-                            show: false,
-                            question: "",
-                          });
-                        },
-                        onCancel: () => {
-                          setModalConfirm({
-                            show: false,
-                            question: "",
-                          });
-                        },
-                      });
-                    }}
-                  >
-                    <AiFillCloseSquare className="tab__table__td__btn__icon" />
-                  </button>
+                  {loadingFriends ? (
+                    <AiOutlineLoading className="default-loading"/>
+                  ): (
+                    <button
+                      type="submit"
+                      className="tab__table__td__btn"
+                      onClick={() => {
+                        setModalConfirm({
+                          show: true,
+                          question: `¿Estás seguro de eliminar a ${friend.username} de tus amigos?`,
+                          onConfirm: () => {
+                            handleDeleteFriend(friend.username);
+                            setModalConfirm({
+                              show: false,
+                              question: "",
+                            });
+                          },
+                          onCancel: () => {
+                            setModalConfirm({
+                              show: false,
+                              question: "",
+                            });
+                          },
+                        });
+                      }}
+                    >
+                      <AiFillCloseSquare className="tab__table__td__btn__icon" />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

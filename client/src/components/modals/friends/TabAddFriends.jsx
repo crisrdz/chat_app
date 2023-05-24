@@ -3,6 +3,7 @@ import { AiOutlineRight, AiOutlineLoading, AiOutlineCheck, AiOutlineClose } from
 import { getUserByUsername } from "../../../api/user";
 import { socket } from "../../../socket";
 import "../Tabs.css";
+import { useNavigation } from "react-router-dom";
 
 const STATUS = {
   NORMAL: "NORMAL",
@@ -12,6 +13,7 @@ const STATUS = {
 }
 
 function TabAddFriends({ className }) {
+  const navigation = useNavigation();
   const [searchValue, setSearchValue] = useState("");
   const [error, setError] = useState();
   const [status, setStatus] = useState(STATUS.NORMAL);
@@ -99,9 +101,13 @@ function TabAddFriends({ className }) {
         </div>
       </form>
         {status === STATUS.SUCCESS && (
-          <button className="modal__btn-submit" onClick={handleAddFriend}>
-            Enviar solicitud de amistad
-          </button>
+          navigation.state !== "idle" ? (
+            <div className="modal__btn-submit"><AiOutlineLoading className="default-loading"/></div>
+          ) : (
+            <button className="modal__btn-submit" onClick={handleAddFriend}>
+              Enviar solicitud de amistad
+            </button>
+          )
         )}
         {
           requestError && <small htmlFor="searchbar" className="modal__input-text--error">{requestError}</small>

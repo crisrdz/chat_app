@@ -1,7 +1,10 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
+import { AiOutlineLoading } from "react-icons/ai";
 import "../Tabs.css";
 
 function TabFriendsChat({ friends, className, error = null }) {
+  const navigation = useNavigation();
+
   if(error) {
     return (
       <p className={className ? className : ""} style={{color: "red"}}>{error}</p>
@@ -23,7 +26,11 @@ function TabFriendsChat({ friends, className, error = null }) {
           )
         })}
       </select>
-      <button type="submit" className="modal__btn-submit">Nuevo chat</button>
+      {navigation.state !== "idle" ? (
+        <div className="modal__btn-submit"><AiOutlineLoading className="default-loading"/></div>
+      ) : (
+        <button type="submit" className="modal__btn-submit">Nuevo chat</button>
+      )}
     </Form>
   );
 }

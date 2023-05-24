@@ -10,15 +10,19 @@ function ModalFriends({ setShow }) {
   const [tabAddFriends, setTabAddFriends] = useState(false);
   const [friends, setFriends] = useState(null);
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function searchFriends() {
     try {
+      setLoading(true);
       const { token } = JSON.parse(localStorage.getItem("user"));
       const data = await getFriends(token);
 
       setFriends(data.user.friends);
       setError(null);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setError("Ha ocurrido un error en el servidor. Reinténtelo más tarde.");
     }
   }
@@ -54,7 +58,7 @@ function ModalFriends({ setShow }) {
         </div>
 
         <div className="tab__tab-body">
-          <TabFriends className={!tabFriends && "modal__tab--hidden"} friends={friends} searchFriends={searchFriends} errorState={{error, setError}} />
+          <TabFriends className={!tabFriends && "modal__tab--hidden"} friends={friends} searchFriends={searchFriends} errorState={{error, setError}} loadingFriends={loading} />
           <TabAddFriends className={!tabAddFriends && "modal__tab--hidden"} searchFriends={searchFriends} />
         </div>
       </div>

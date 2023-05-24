@@ -50,12 +50,6 @@
   animation: loading 2s infinite;
 }
 
-@keyframes loading {
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-
 .table-container {
   width: max-content;
   max-width: 90%;

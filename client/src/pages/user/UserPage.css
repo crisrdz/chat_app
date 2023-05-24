@@ -24,6 +24,11 @@
   display: flex;
   font-size: 1.7rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-user__user-menu:hover {
+  border: 2px solid var(--color-tertiary);
 }
 
 .navbar-user__user-menu__icon-group {
@@ -45,6 +50,14 @@
   overflow: hidden;
   width: 0.6rem;
   height: 0.6rem;
+}
+
+.navbar-user__user-menu__icon-group__icon {
+  transition: all 0.3s ease;
+}
+
+.navbar-user__user-menu__icon-group__icon:hover {
+  color: var(--color-tertiary);
 }
 
 .navbar-user__user-menu__menu {

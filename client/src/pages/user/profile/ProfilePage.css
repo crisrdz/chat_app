@@ -108,6 +108,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 0 3px 0 var(--color-lg-secondary);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .profile__btn:hover {

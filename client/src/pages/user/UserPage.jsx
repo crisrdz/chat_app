@@ -190,7 +190,7 @@ function UserPage() {
           </div>
 
           <div className="navbar-user__user-menu" onClick={handleToggleMenu}>
-            <AiOutlineUser />
+            <AiOutlineUser className="navbar-user__user-menu__icon-group__icon" />
             <div className="navbar-user__user-menu__menu" ref={refMenu}>
               <Link
                 to={"/user/profile"}

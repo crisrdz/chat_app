@@ -54,12 +54,6 @@
   animation: loading 1s infinite;
 }
 
-@keyframes loading {
-  to {
-    transform: rotateZ(360deg);
-  }
-}
-
 .chat-box__messages--no-chat {
   justify-content: center;
   align-items: center;

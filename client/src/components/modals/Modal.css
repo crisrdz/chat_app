@@ -85,12 +85,6 @@
   animation: loading 0.9s infinite;
 }
 
-@keyframes loading {
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-
 .modal__input__icon--success {
   color: var(--color-green-primary);
 }
@@ -118,6 +112,7 @@
 
   cursor: pointer;
 
+  display: flex;
   transition: all 0.3s ease;
 }
 
@@ -166,6 +161,10 @@
   flex-direction: column;
   overflow: auto;
   max-height: 10rem;
+}
+
+.tab__tab-body--with-select {
+  overflow: inherit;
 }
 
 .modal__tab--hidden {

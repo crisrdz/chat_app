@@ -1,4 +1,5 @@
-import { Form, useRouteLoaderData } from "react-router-dom"
+import { Form, useNavigation, useRouteLoaderData } from "react-router-dom"
+import { AiOutlineLoading } from "react-icons/ai";
 import { changeVisibility } from "../../../api/user";
 
 export async function action () {
@@ -12,6 +13,7 @@ export async function action () {
 }
 
 function ChangeVisibilityPage() {
+  const navigation = useNavigation();
   const { isPublic } = useRouteLoaderData("user");
 
   return (
@@ -23,7 +25,11 @@ function ChangeVisibilityPage() {
         <input type="text" id="visibility" className="profile__box__field" value={isPublic ? "Pública" : "Privada"} readOnly />
       </div>
 
-      <button type="submit" className="profile__btn">Cambiar</button>
+      {navigation.state !== "idle" ? (
+        <div className="profile__btn"><AiOutlineLoading className="default-loading"/></div>
+      ) : (
+        <button type="submit" className="profile__btn">Cambiar</button>
+      )}
     </Form>
   )
 }

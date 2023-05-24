@@ -8,6 +8,12 @@
   padding: 0.3rem 0rem;
   margin: 6px 3px;
   cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.chat:hover {
+  box-shadow: 0 0 3px var(--color-primary);
 }
 
 .chat--hidden {

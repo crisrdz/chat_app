@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Form, useNavigate, useParams, useSubmit } from 'react-router-dom'
-import { AiOutlineMenu } from 'react-icons/ai'
+import { Form, useNavigate, useNavigation, useParams, useSubmit } from 'react-router-dom'
+import { AiOutlineLoading, AiOutlineMenu } from 'react-icons/ai'
 import ModalConfirmation from '../modals/ModalConfirmation';
 import './Chat.css';
 
 function Chat({chat}) {
+  const navigation = useNavigation();
   const { username } = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const formDeleteRef = useRef(null);
@@ -72,28 +73,35 @@ function Chat({chat}) {
                     <input type="hidden" name="id" value={id} readOnly />
                   )
                 }
-                <button type="button" className='chat__right__menu__item' onClick={(e) => {
-                  e.stopPropagation();
-                  setModalConfirm({
-                    show: true,
-                    question: "¿Estás seguro de eliminar este chat?",
-                    onConfirm: () => {
-                      submit(formDeleteRef.current, {
-                        method: "DELETE"
-                      });
-                      setModalConfirm({
-                        show: false,
-                        question: "",
-                      });
-                    },
-                    onCancel: () => {
-                      setModalConfirm({
-                        show: false,
-                        question: "",
-                      });
-                    }
-                  })
-                }}>Eliminar chat</button>
+                { navigation.state !== "idle" ? (
+                  <div className='chat__right__menu__item'><AiOutlineLoading className="default-loading"/></div>
+                ) : (
+                  <button type="button" className='chat__right__menu__item' onClick={(e) => {
+                    e.stopPropagation();
+                    setModalConfirm({
+                      show: true,
+                      question: "¿Estás seguro de eliminar este chat?",
+                      onConfirm: () => {
+                        submit(formDeleteRef.current, {
+                          method: "DELETE"
+                        });
+                        setModalConfirm({
+                          show: false,
+                          question: "",
+                        });
+                      },
+                      onCancel: () => {
+                        setModalConfirm({
+                          show: false,
+                          question: "",
+                        });
+                      }
+                    })
+                  }}>
+                    Eliminar chat
+                  </button>
+                )}
+                
               </Form>
             </div>
           )}

@@ -19,3 +19,13 @@ body {
   font-family: 'Rubik', sans-serif;
   margin: 0;
 }
+
+.default-loading {
+  animation: loading 1.5s ease infinite;
+}
+
+@keyframes loading {
+  to{
+    transform: rotateZ(360deg);
+  }
+}

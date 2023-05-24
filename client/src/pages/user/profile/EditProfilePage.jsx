@@ -1,5 +1,6 @@
-import { Form, redirect, useActionData, useRouteLoaderData } from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation, useRouteLoaderData } from "react-router-dom";
 import { updateUser } from "../../../api/user";
+import { AiOutlineLoading } from "react-icons/ai";
 
 export async function action({ request }) {
   try {
@@ -23,6 +24,7 @@ export async function action({ request }) {
 
 function EditProfilePage() {
   const user = useRouteLoaderData("user");
+  const navigation = useNavigation();
   const error = useActionData();
 
   return (
@@ -119,9 +121,13 @@ function EditProfilePage() {
         </small>
       )}
 
-      <button type="submit" className="profile__btn">
-        Editar perfil
-      </button>
+      {navigation.state !== "idle" ? (
+        <div className="profile__btn"><AiOutlineLoading className="default-loading"/></div>
+      ) : (
+        <button type="submit" className="profile__btn">
+          Editar perfil
+        </button>
+      )}
     </Form>
   );
 }

@@ -84,7 +84,7 @@ function ModalNewChat({ setShow, chats }) {
           </button>
         </div>
 
-        <div className="tab__tab-body">
+        <div className="tab__tab-body tab__tab-body--with-select">
           <TabFriendsChat className={!tabFriends && "modal__tab--hidden"} friends={friends} error={error} />
           <TabPublicUsers className={!tabPublicUsers && "modal__tab--hidden"} users={users} error={error} searchPublicUsers={searchPublicUsers} hasMore={hasMorePublicUsers} />
         </div>

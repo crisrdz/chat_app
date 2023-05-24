@@ -8,6 +8,7 @@
   color: var(--color-lg-primary);
   background-color: var(--color-primary);
   z-index: 1;
+  box-shadow: 0 0 5px var(--color-primary);
 }
 
 .navbar {
