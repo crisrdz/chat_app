@@ -86,7 +86,12 @@ function AdminPage() {
                 <th className="table-container__table__row__cell">
                   Cantidad de amigos
                 </th>
-                <th className="table-container__table__row__cell">Roles</th>
+                <th className="table-container__table__row__cell">
+                  Roles
+                </th>
+                <th className="table-container__table__row__cell">
+                  Visibilidad
+                </th>
                 <th className="table-container__table__row__cell">
                   Fecha de creación
                 </th>
@@ -108,6 +113,9 @@ function AdminPage() {
                     {user.roles.map((role) => role.role).join(" - ")}
                   </td>
                   <td className="table-container__table__row__cell">
+                    {user.isPublic ? "Pública" : "Privada"}
+                  </td>
+                  <td className="table-container__table__row__cell">
                     {new Date(user.createdAt).toLocaleString(undefined, {
                       dateStyle: "short",
                       timeStyle: "short",
@@ -117,30 +125,30 @@ function AdminPage() {
               ))}
             </tbody>
           </table>
-          <div className="table-container__pages">
+        </div>
+        <div className="pages">
             {currentPage > 1 ? (
               <AiFillCaretLeft
-                className="table-container__pages__option"
+                className="pages__option"
                 onClick={() => navigate(`?page=${currentPage - 1}`)}
               />
             ) : (
-              <div className="table-container__pages__option table-container__pages__option--hidden"></div>
+              <div className="pages__option pages__option--hidden"></div>
             )}
-            <div className="table-container__pages__option table-container__pages__option-page">
+            <div className="pages__option pages__option-page">
               {currentPage}
             </div>
             {
               usersQuantityState / 10 > currentPage ? (
                 <AiFillCaretRight
-                  className="table-container__pages__option"
+                  className="pages__option"
                   onClick={() => navigate(`?page=${currentPage + 1}`)}
                 />
               ) : (
-                <div className="table-container__pages__option table-container__pages__option--hidden"></div>
+                <div className="pages__option pages__option--hidden"></div>
               )
             }
           </div>
-        </div>
       </main>
       <Footer />
     </>

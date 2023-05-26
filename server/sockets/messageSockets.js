@@ -17,6 +17,13 @@ export async function newMessage(message, userId) {
   chat.messages = messages;
   await chat.save();
 
-  return messageSaved;
+  const messageSavedJSON = messageSaved.toJSON();
+
+  return {
+    body: messageSavedJSON.body,
+    user: messageSavedJSON.user,
+    chat: messageSavedJSON.chat,
+    createdAt: messageSavedJSON.createdAt,
+  };
 }
 

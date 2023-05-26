@@ -17,7 +17,7 @@ export const getUsers = async (req, res) => {
     const limit = 10;
     const skip = limit * (page - 1);
 
-    const users = await User.find({}, { password: 0 }, { limit, skip }).populate({path: "roles", select: "_id role"}).lean();
+    const users = await User.find({}, { password: 0, _id: 0, friendRequests: 0, updatedAt: 0 }, { limit, skip }).populate({path: "roles", select: "_id role"}).lean();
 
     const usersQuantity = await User.estimatedDocumentCount().lean();
 
@@ -184,7 +184,7 @@ export const getPublicUsers = async (req, res) => {
     const limit = 20;
     const skip = limit * (page - 1);
 
-    const users = await User.find({isPublic: true}, { password: 0 }, { limit, skip }).lean();
+    const users = await User.find({isPublic: true}, { _id: 0, username: 1 }, { limit, skip }).lean();
 
     return res.json({
       success: true,

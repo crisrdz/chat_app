@@ -5,6 +5,7 @@ import Select from '../../custom/Select'
 import "../Tabs.css";
 
 function TabPublicUsers({ users, className, error = null, searchPublicUsers, hasMore }) {
+  console.log(users);
   const navigation = useNavigation();
 
   if(error) {

@@ -20,7 +20,6 @@
   flex-direction: column;
   gap: 0.8rem;
   animation: showModal 0.5s ease forwards;
-  overflow: auto;
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.4);
 }
 
