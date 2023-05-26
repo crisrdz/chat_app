@@ -1,4 +1,4 @@
-import { redirect, useActionData, useLoaderData } from "react-router-dom";
+import { redirect, useActionData } from "react-router-dom";
 import { signin } from "../../api/auth";
 import ModalForm from "./ModalForm";
 
@@ -29,16 +29,20 @@ function Login({ setShow }) {
     <ModalForm action={"login"} submit={"Iniciar sesión"} setShow={setShow}>
       <h2 className="modal__title">Iniciar sesión</h2>
 
-      <label htmlFor="email">Correo electrónico:</label>
-      <input type="text" name="email" id="email" className="modal__input" />
+      <div>
+        <label htmlFor="email">Correo electrónico:</label>
+        <input type="text" name="email" id="email" className="modal__input" />
+      </div>
 
-      <label htmlFor="password">Contraseña:</label>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        className="modal__input"
-      />
+      <div>
+        <label htmlFor="password">Contraseña:</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          className="modal__input"
+        />
+      </div>
 
       {error ? (
         typeof error === "string" ? (

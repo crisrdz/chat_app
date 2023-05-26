@@ -22,7 +22,7 @@ function LandingPage() {
         />
       </Header>
       
-      <main className="main">
+      <main className="main main--landing">
         <div className="sections">
           <section className="sections__section">
             <h4 className="sections__section__title">ChatApp</h4>

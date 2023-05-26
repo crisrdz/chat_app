@@ -1,7 +1,10 @@
 .modal {
   position: fixed;
   z-index: 5;
-  max-width: 18rem;
+  width: 95%;
+  max-width: 22rem;
+  max-height: 90%;
+  box-sizing: border-box;
 
   left: 50%;
   top: 50%;
@@ -17,6 +20,8 @@
   flex-direction: column;
   gap: 0.8rem;
   animation: showModal 0.5s ease forwards;
+  overflow: auto;
+  box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.4);
 }
 
 .modal-tabs {
@@ -53,6 +58,9 @@
   font-size: 0.9rem;
   background-color: var(--color-white);
   display: flex;
+  margin-top: 0.4rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .modal__input:focus-within {
@@ -122,6 +130,10 @@
 
 .modal__error {
   color: red;
+}
+
+.modal__help-label {
+  color: gray;
 }
 
 .tab {

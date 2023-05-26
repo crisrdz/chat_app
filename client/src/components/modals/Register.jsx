@@ -31,47 +31,67 @@ function Register({ setShow }) {
     <ModalForm action={"register"} submit={"Registrarse"} setShow={setShow}>
       <h2 className="modal__title">Registrarse</h2>
 
-      <label htmlFor="email">Correo electrónico:</label>
-      <input type="text" name="email" id="email" className="modal__input" />
-      {error?.details?.find(error => error.path.includes("email")) && (
-        <small className="modal__error">
-          {error.details.find(error => error.path.includes("email")).message}
-        </small>
-      )}
+      <div>
+        <label htmlFor="email">Correo electrónico:</label>
+        <input type="text" name="email" id="email" className="modal__input" />
+        {error?.details?.find(error => error.path.includes("email")) ? (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("email")).message}
+          </small>
+        ) : (
+          <small className="modal__help-label">
+            Escriba un correo electrónico válido. Ej: email@gmail.com.
+          </small>
+        )}
+      </div>
 
-      <label htmlFor="username">Nombre de usuario:</label>
-      <input type="text" name="username" id="username" className="modal__input" />
-      {error?.details?.find(error => error.path.includes("username")) && (
-        <small className="modal__error">
-          {error.details.find(error => error.path.includes("username")).message}
-        </small>
-      )}
+      <div>
+        <label htmlFor="username">Nombre de usuario:</label>
+        <input type="text" name="username" id="username" className="modal__input" />
+        {error?.details?.find(error => error.path.includes("username")) ? (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("username")).message}
+          </small>
+        ) : (
+          <small className="modal__help-label">
+            Nombre de usuario debe tener entre 3 y 16 caracteres y solo debe contener caracteres alfanuméricos.
+          </small>
+        )}
+      </div>
 
-      <label htmlFor="passwordOne">Contraseña:</label>
-      <input
-        type="password"
-        name="passwordOne"
-        id="passwordOne"
-        className="modal__input"
-      />
-      {error?.details?.find(error => error.path.includes("passwordOne")) && (
-        <small className="modal__error">
-          {error.details.find(error => error.path.includes("passwordOne")).message}
-        </small>
-      )}
+      <div>
+        <label htmlFor="passwordOne">Contraseña:</label>
+        <input
+          type="password"
+          name="passwordOne"
+          id="passwordOne"
+          className="modal__input"
+        />
+        {error?.details?.find(error => error.path.includes("passwordOne")) ? (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("passwordOne")).message}
+          </small>
+        ) : (
+          <small className="modal__help-label">
+            La contraseña debe tener entre 6 y 24 caracteres.
+          </small>
+        )}
+      </div>
 
-      <label htmlFor="passwordTwo">Confirmar contraseña:</label>
-      <input
-        type="password"
-        name="passwordTwo"
-        id="passwordTwo"
-        className="modal__input"
-      />
-      {error?.details?.find(error => error.path.includes("passwordTwo")) && (
-        <small className="modal__error">
-          {error.details.find(error => error.path.includes("passwordTwo")).message}
-        </small>
-      )}
+      <div>
+        <label htmlFor="passwordTwo">Confirmar contraseña:</label>
+        <input
+          type="password"
+          name="passwordTwo"
+          id="passwordTwo"
+          className="modal__input"
+        />
+        {error?.details?.find(error => error.path.includes("passwordTwo")) && (
+          <small className="modal__error">
+            {error.details.find(error => error.path.includes("passwordTwo")).message}
+          </small>
+        )}
+      </div>
 
       {typeof error === "string" && (
         <small className="modal__error">
