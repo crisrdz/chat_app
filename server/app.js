@@ -21,13 +21,16 @@ app.use(
 );
 app.use(express.json());
 
-// Statics
-app.use(express.static(join(__dirname, "../client/dist")));
-
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/friend", friendRoutes);
+
+// Statics
+app.use(express.static(join(__dirname, "../client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(join(__dirname, "../client/dist/index.html"));
+});
 
 export default app;
