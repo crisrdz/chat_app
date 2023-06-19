@@ -1,7 +1,7 @@
 {
   "name": "chatapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "A real-time chat application",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "start": "node server"
   },
   "keywords": [],
-  "author": "",
+  "author": "crisrdz",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
