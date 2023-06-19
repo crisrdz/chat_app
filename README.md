@@ -16,13 +16,13 @@ No está garantizado su funcionamiento con versiones anteriores.
 1. Clona este repositorio en tu máquina local:
 
    ```shell
-   git clone https://github.com/tu-usuario/nombre-del-repositorio.git
+   git clone https://github.com/crisrdz/chat_app.git
    ```
 
 2. Navega al directorio del proyecto:
 
    ```shell
-   cd nombre-del-repositorio
+   cd chat_app
    ```
 
 3. Instala las dependencias del servidor:
